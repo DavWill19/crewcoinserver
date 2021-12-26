@@ -1,29 +1,29 @@
 const express = require('express');
-const borrowRouter = express.Router();
+const storeRouter = express.Router();
 const cors = require('./cors');
-const Borrow = require('../models/borrow');
+const Store = require('../models/store');
 const authenticate = require('../authenticate');
 
 
 
-borrowRouter.route('/')
+storeRouter.route('/')
 .options( (req, res) => { res.sendStatus(200); })
 .get(  (req, res, next) => {
-    Borrow.find()
-      .then((borrow) => {
+  Store.find()
+      .then((store) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(borrow);
+        res.json(store);
       })
       .catch((err) => next(err));
   })
   .post(cors.cors, (req, res, next) => {
-    Borrow.create(req.body)
-      .then((borrow) => {
-        console.log('Form entry created ', borrow);
+    Store.create(req.body)
+      .then((store) => {
+        console.log('Form entry created ', store);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(borrow);
+        res.json(store);
       })
       .catch((err) => next(err));
   })
@@ -36,20 +36,20 @@ borrowRouter.route('/')
     res.end('Delete operation not supported on /borrow');
 });
 
-borrowRouter.route('/:borrowId')
+storeRouter.route('/:storeId')
 .put((req, res, next) => {
-    Borrow.findByIdAndUpdate(req.params.borrowId, {
+  Store.findByIdAndUpdate(req.params.storeId, {
         $set: req.body
     }) 
-    .then(borrow => {
-        console.log('Form entry created ', borrow);
+    .then(store => {
+        console.log('Form entry created ', store);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(borrow);
+        res.json(store);
     })
     .catch(err => next(err));
 });
 
 
 
-module.exports = borrowRouter;
+module.exports = storeRouter;

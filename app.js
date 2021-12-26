@@ -7,9 +7,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const url = config.mongoUrl;
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/usersRouter');
-var feedbackRouter = require('./routes/feedbackRouter');
-var borrowRouter = require('./routes/borrowRouter');
+var storeRouter = require('./routes/storeRouter');
+var announcementsRouter = require('./routes/announcementsRouter');
 var crewUserRouter = require('./routes/crewUserRouter');
 
 const passport = require('passport');
@@ -59,10 +58,9 @@ app.use(
 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/feedback', feedbackRouter);
-app.use('/borrow', borrowRouter);
+app.use('/store', storeRouter);
 app.use('/crewuser', crewUserRouter);
+app.use('/announcements', announcementsRouter);
 
 
 // catch 404 and forward to error handler
