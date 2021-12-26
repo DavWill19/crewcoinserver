@@ -16,7 +16,7 @@ const announcementsSchema = new Schema(
             required: true,
         },
         image: {
-            type: Image,
+            type: String,
         },
 
     },
