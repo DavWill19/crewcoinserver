@@ -23,6 +23,10 @@ const crewuserSchema = new Schema({
         type: String,
         default: '',
     },
+    phone: {
+        type: Number,
+        default: '',
+    },
     portalId: {
         type: String,
         default: '',
