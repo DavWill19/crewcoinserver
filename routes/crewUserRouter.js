@@ -50,6 +50,9 @@ crewUserRouter.route(`/signup`)
           if (req.body.history) {
             crewuser.history = req.body.history;
           }
+          if (req.body.phone) {
+            crewuser.phone = req.body.phone;
+          }
           crewuser.save(err => {
             if (err) {
               res.statusCode = 500;
@@ -70,6 +73,7 @@ crewUserRouter.route(`/signup`)
                   organization: req.user.organization,
                   balance: req.user.balance,
                   history: req.user.history,
+                  phone: req.user.phone,
                   joined: req.user.createdAt
                 }
               });
