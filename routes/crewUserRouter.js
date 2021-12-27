@@ -8,7 +8,7 @@ const authenticate = require('../authenticate');
 
 /* GET users listing. */
 
-crewUserRouter.route('/')
+crewUserRouter.route('/:portalId')
   .options((req, res) => { res.sendStatus(200); })
   .get(function (req, res, next) {
     CrewUser.find( { portalId: req.params.portalId } )
