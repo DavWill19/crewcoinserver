@@ -11,7 +11,7 @@ const authenticate = require('../authenticate');
 crewUserRouter.route('/')
   .options((req, res) => { res.sendStatus(200); })
   .get(authenticate.verifyUser, function (req, res, next) {
-    CrewUser.find()
+    CrewUser.find( { portalId: req.params.portalId } )
       .then((crewuser) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
