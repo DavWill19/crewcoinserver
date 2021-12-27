@@ -100,6 +100,7 @@ crewUserRouter.route(`/login`)
         portalId: req.user.portalId,
         balance: req.user.balance,
         history: req.user.history,
+        phone: req.user.phone,
         joined: req.user.createdAt
       }
     });
