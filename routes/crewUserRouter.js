@@ -120,4 +120,18 @@ crewUserRouter.route(`/logout`)
     }
   });
 
+  crewUserRouter.route('/:username')
+.put((req, res, next) => {
+    CrewUser.findByIdAndUpdate(req.params.username, {
+        $set: req.body
+    }) 
+    .then(crewuser => {
+        console.log('Form entry created ', crewuser);
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(crewuser);
+    })
+    .catch(err => next(err));
+});
+
 module.exports = crewUserRouter;
