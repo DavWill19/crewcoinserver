@@ -120,7 +120,7 @@ crewUserRouter.route(`/logout`)
     }
   });
 
-  crewUserRouter.route('/:username')
+  crewUserRouter.route('/change/:username')
 .put((req, res, next) => {
     CrewUser.findByIdAndUpdate(req.params.username, {
         $set: req.body
