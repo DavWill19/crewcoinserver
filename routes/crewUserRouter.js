@@ -122,17 +122,14 @@ crewUserRouter.route(`/logout`)
 
   crewUserRouter.route('/change/:username')
 .put((req, res, next) => {
-    db.getUser(req.params.username, {
+    CrewUser.findOneAndUpdate(req.params.username, {
         $set: req.body
     }) 
     .then(crewuser => {
         console.log('Form entry created ', crewuser);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json({
-          crewuser,
-          success: true
-        });
+        res.json({crewuser, res.success = true,});
     })
     .catch(err => next(err));
 });
