@@ -130,7 +130,10 @@ crewUserRouter.route(`/logout`)
       console.log('Form entry created ', crewuser);
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
-      res.json(crewuser);
+      res.json({
+        crewuser,
+        success: true
+      });
   })
   .catch(err => next(err));
 });
