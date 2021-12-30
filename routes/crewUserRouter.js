@@ -74,7 +74,8 @@ crewUserRouter.route(`/signup`)
                   balance: req.user.balance,
                   history: req.user.history,
                   phone: req.user.phone,
-                  joined: req.user.createdAt
+                  joined: req.user.createdAt,
+                  id: req.user._id
                 }
               });
             });
