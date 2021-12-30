@@ -121,19 +121,18 @@ crewUserRouter.route(`/logout`)
     }
   });
 
-  crewUserRouter.route('/change/:username')
+  crewUserRouter.route('/:userId')
 .put((req, res, next) => {
-    CrewUser.updateUser(req.params.username, {
-        $set: req.body
-    }) 
-    .then(crewuser => {
-        console.log('Form entry created ', crewuser);
-        res.statusCode = 200;
-        res.success = true;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(crewuser);
-    })
-    .catch(err => next(err));
+    CrewUser.findByIdAndUpdate(req.params.userId, {
+      $set: req.body
+  }) 
+  .then(crewuser => {
+      console.log('Form entry created ', crewuser);
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.json(crewuser);
+  })
+  .catch(err => next(err));
 });
 
 module.exports = crewUserRouter;
