@@ -36,8 +36,7 @@ const crewuserSchema = new Schema({
         default: '',
     },
     balance: {
-        type: Number,
-        default: 0
+        type: Number
     },
     history: {
         type: Array,
