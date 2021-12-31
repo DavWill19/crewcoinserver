@@ -79,7 +79,8 @@ crewUserRouter.route(`/signup`)
                 success: true,
                 status: 'Registration Successful!',
                 user: {
-                  name: req.user.firstname + ' ' + req.user.lastname,
+                  firstname: req.user.firstname, 
+                  lastname: req.user.lastname,
                   username: req.user.username,
                   portalId: req.user.portalId,
                   organization: req.user.organization,
