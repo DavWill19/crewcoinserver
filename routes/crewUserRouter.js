@@ -20,6 +20,18 @@ crewUserRouter.route('/:portalId')
       .catch(err => next(err));
   });
 
+  crewUserRouter.route('/reload/:_id')
+  .options((req, res) => { res.sendStatus(200); })
+  .get(function (req, res, next) {
+    CrewUser.find( { _id: req.params._id } )
+      .then((crewuser) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/plain');
+        res.json(crewuser);
+      })
+      .catch(err => next(err));
+  });
+
 crewUserRouter.route(`/signup`)
   .options((req, res) => { res.sendStatus(200); })
   .post((req, res) => {
