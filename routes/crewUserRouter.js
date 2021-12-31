@@ -102,7 +102,9 @@ crewUserRouter.route(`/login`)
         balance: req.user.balance,
         history: req.user.history,
         phone: req.user.phone,
-        joined: req.user.createdAt
+        joined: req.user.createdAt,
+        _id: req.user._id
+
       }
     });
   });
