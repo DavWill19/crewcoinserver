@@ -108,7 +108,8 @@ crewUserRouter.route(`/login`)
       token: token,
       status: 'You are successfully logged in!',
       user: {
-        name: req.user.firstname + ' ' + req.user.lastname,
+        firstname: req.user.firstname, 
+        lastname: req.user.lastname,
         username: req.user.username,
         organization: req.user.organization,
         portalId: req.user.portalId,
