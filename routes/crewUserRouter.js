@@ -141,7 +141,7 @@ crewUserRouter.route(`/logout`)
 .put((req, res, next) => {
     CrewUser.findByIdAndUpdate(req.params.userId, 
       {balance: req.body.balance},
-      {history: push(req.body.history)}
+      {$push: { history: req.body.history }}
   ) 
   .then(crewuser => {
       console.log('History entry created ', crewuser);
