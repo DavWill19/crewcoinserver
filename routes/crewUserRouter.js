@@ -11,7 +11,7 @@ const authenticate = require('../authenticate');
 crewUserRouter.route('/:portalId')
   .options((req, res) => { res.sendStatus(200); })
   .get(function (req, res, next) {
-    CrewUser.find( { portalId: req.params.portalId } )
+    CrewUser.find({ portalId: req.params.portalId })
       .then((crewuser) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
@@ -20,10 +20,10 @@ crewUserRouter.route('/:portalId')
       .catch(err => next(err));
   });
 
-  crewUserRouter.route('/reload/:_id')
+crewUserRouter.route('/reload/:_id')
   .options((req, res) => { res.sendStatus(200); })
   .get(function (req, res, next) {
-    CrewUser.find( { _id: req.params._id } )
+    CrewUser.find({ _id: req.params._id })
       .then((crewuser) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
@@ -79,7 +79,7 @@ crewUserRouter.route(`/signup`)
                 success: true,
                 status: 'Registration Successful!',
                 user: {
-                  firstname: req.user.firstname, 
+                  firstname: req.user.firstname,
                   lastname: req.user.lastname,
                   username: req.user.username,
                   portalId: req.user.portalId,
@@ -108,7 +108,7 @@ crewUserRouter.route(`/login`)
       token: token,
       status: 'You are successfully logged in!',
       user: {
-        firstname: req.user.firstname, 
+        firstname: req.user.firstname,
         lastname: req.user.lastname,
         username: req.user.username,
         organization: req.user.organization,
@@ -137,22 +137,22 @@ crewUserRouter.route(`/logout`)
     }
   });
 
-  crewUserRouter.route('/:userId')
-.put((req, res, next) => {
-    CrewUser.findByIdAndUpdate(req.params.userId, 
-      {balance: req.body.balance},
-      {$push: { history: req.body.history }}
-  ) 
-  .then(crewuser => {
-      console.log('History entry created ', crewuser);
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.json({
-        crewuser,
-        success: true
-      });
-  })
-  .catch(err => next(err));
-});
+crewUserRouter.route('/:userId')
+  .put((req, res, next) => {
+    CrewUser.findByIdAndUpdate(req.params.userId,
+      { balance: req.body.balance },
+      { history: { $push: { history: req.body.history } } }
+    )
+      .then(crewuser => {
+        console.log('History entry created ', crewuser);
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({
+          crewuser,
+          success: true
+        });
+      })
+      .catch(err => next(err));
+  });
 
 module.exports = crewUserRouter;
