@@ -140,7 +140,7 @@ crewUserRouter.route(`/logout`)
   crewUserRouter.route('/:userId')
 .put((req, res, next) => {
     CrewUser.findByIdAndUpdate(req.params.userId, {
-      balance: req.balance
+      $set: req.body
   }) 
   .then(crewuser => {
       console.log('Form entry created ', crewuser);
