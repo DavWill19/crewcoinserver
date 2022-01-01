@@ -139,11 +139,12 @@ crewUserRouter.route(`/logout`)
 
   crewUserRouter.route('/:userId')
 .put((req, res, next) => {
-    CrewUser.findByIdAndUpdate(req.params.userId, {
-      $set: req.body
-  }) 
+    CrewUser.findByIdAndUpdate(req.params.userId, 
+      {balance: req.user.balance},
+      { $push: { history: req.user.history } }
+  ) 
   .then(crewuser => {
-      console.log('Form entry created ', crewuser);
+      console.log('History entry created ', crewuser);
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
       res.json({
