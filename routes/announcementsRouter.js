@@ -23,7 +23,7 @@ announcementsRouter.route('/')
         console.log('Form entry created ', announcements);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(announcements);
+        res.json({announcements, success: true,});
       })
       .catch((err) => next(err));
   })
