@@ -19,12 +19,12 @@ announcementsRouter.route('/')
   })
   .post(cors.cors, (req, res, next) => {
     Announcements.create(req.body)
-      .then (Announcements.find()
+      .then (Announcements.find())
       .then((announcements) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json({announcements, success: true});
-      }))
+      })
       .catch((err) => next(err));
   })
 .put((req, res) => {
