@@ -37,10 +37,9 @@ announcementsRouter.route('/')
 });
 
 announcementsRouter.route('/:portalId')
-.get((req, res, next) => {
-  Announcements.find({"portalId": req.params.portalId}, {
-        $set: req.body
-    }) 
+.options( (req, res) => { res.sendStatus(200); })
+.get(  (req, res, next) => {
+  Announcements.find({"portalId": req.params.portalId})
     .then(announcements => {
         console.log('Found ', announcements);
         res.statusCode = 200;
