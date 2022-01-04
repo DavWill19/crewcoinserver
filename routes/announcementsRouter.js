@@ -36,16 +36,16 @@ announcementsRouter.route('/')
     res.end('Delete operation not supported on /borrow');
 });
 
-announcementsRouter.route('/:announcementsId')
-.put((req, res, next) => {
-  Announcements.findByIdAndUpdate(req.params.announcementsId, {
+announcementsRouter.route('/:portalId')
+.get((req, res, next) => {
+  Announcements.find({"portalId": req.params.portalId}, {
         $set: req.body
     }) 
     .then(announcements => {
-        console.log('Form entry created ', announcements);
+        console.log('Found ', announcements);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(announcements);
+        res.json({announcements, success: true});
     })
     .catch(err => next(err));
 });
