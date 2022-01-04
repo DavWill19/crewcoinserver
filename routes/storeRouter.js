@@ -23,7 +23,7 @@ storeRouter.route('/')
         console.log('Form entry created ', store);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(store);
+        res.json({store, success: true});
       })
       .catch((err) => next(err));
   })
