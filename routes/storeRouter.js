@@ -7,9 +7,9 @@ const authenticate = require('../authenticate');
 
 
 storeRouter.route('/')
-.options( (req, res) => { res.sendStatus(200); })
-.get(  (req, res, next) => {
-  Store.find()
+  .options((req, res) => { res.sendStatus(200); })
+  .get((req, res, next) => {
+    Store.find()
       .then((store) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
@@ -23,31 +23,50 @@ storeRouter.route('/')
         console.log('Form entry created ', store);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json({store, success: true});
+        res.json({ store, success: true });
       })
       .catch((err) => next(err));
   })
-.put((req, res) => {
+  .put((req, res) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /borrow');
-})
-.delete((req, res) => {
+  })
+  .delete((req, res) => {
     res.statusCode = 403;
     res.end('Delete operation not supported on /borrow');
-});
+  });
 
 storeRouter.route('/:portalId')
-.options( (req, res) => { res.sendStatus(200); })
-.get(  (req, res, next) => {
-  Store.find({"portalId": req.params.portalId})
-    .then(prizes => {
+  .options((req, res) => { res.sendStatus(200); })
+  .get((req, res, next) => {
+    Store.find({ "portalId": req.params.portalId })
+      .then(prizes => {
         console.log('Found ', prizes);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json({prizes, success: true});
-    })
-    .catch(err => next(err));
-});
+        res.json({ prizes, success: true });
+      })
+      .catch(err => next(err));
+  });
+storeRouter.route('/:prizeId')
+  .delete((req, res) => {
+    Store.findByIdAndDelete(req.params.prizeId,
+      {
+        prizeId: req.body._id
+      }
+    )
+      .then(prizes => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({
+          prizes,
+          success: true
+        });
+      })
+      .catch(err => next(err));
+  });
+
+
 
 
 
