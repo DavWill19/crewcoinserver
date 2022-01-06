@@ -49,6 +49,24 @@ announcementsRouter.route('/:portalId')
     .catch(err => next(err));
 });
 
+announcementsRouter.route('/delete/:postId')
+  .delete((req, res) => {
+    Announcements.findByIdAndDelete(req.params.postId,
+      {
+        postId: req.body._id
+      }
+    )
+      .then(posts => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({
+          posts,
+          success: true
+        });
+      })
+      .catch(err => next(err));
+  });
+
 
 
 module.exports = announcementsRouter;
