@@ -67,8 +67,4 @@ storeRouter.route('/:prizeId')
       .catch(err => next(err));
   });
 
-
-
-
-
 module.exports = storeRouter;

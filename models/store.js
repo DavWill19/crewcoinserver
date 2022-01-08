@@ -16,7 +16,8 @@ const storeSchema = new Schema(
             required: true,
         },
         image: {
-            type: String,
+            data: Buffer, 
+            contentType: String
         },
         cost: {
             type: Number,
