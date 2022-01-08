@@ -59,7 +59,6 @@ storeRouter.route('/')
       image: file.path
     })
     const savedimage = await imagepost.save()
-    res.json(savedimage)
     Store.create(
       {
         portalId: req.body.portalId,
