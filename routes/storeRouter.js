@@ -65,7 +65,7 @@ storeRouter.route('/')
         title: req.body.title,
         description: req.body.description,
         cost: req.body.cost,
-        image: savedimage
+        image: image
       }
     )
       .then(Store.find())
