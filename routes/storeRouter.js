@@ -3,25 +3,7 @@ const storeRouter = express.Router();
 const cors = require('./cors');
 const Store = require('../models/store');
 const authenticate = require('../authenticate');
-const multer = require('multer');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/images');
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname)
-  }
-});
-
-const imageFileFilter = (req, file, cb) => {
-  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-    return cb(new Error('You can upload only image files!'), false);
-  }
-  cb(null, true);
-};
-
-const upload = multer({ storage: storage, fileFilter: imageFileFilter });
 
 
 
@@ -36,40 +18,10 @@ storeRouter.route('/')
       })
       .catch((err) => next(err));
   })
-  // .post(cors.cors, (req, res, next) => {
-  //   Store.create(req.body)
-  //     .then((store) => {
-  //       console.log('Form entry created ', store);
-  //       res.statusCode = 200;
-  //       res.setHeader('Content-Type', 'application/json');
-  //       res.json({ store, success: true });
-  //     })
-  //     .catch((err) => next(err));
-  // })
-  .post(cors.cors, upload.single('myFile'), async (req, res, next) => {
-    const file = req.image
-    if (!file) {
-      const error = new Error('Please upload a file')
-      error.httpStatusCode = 400
-      return next("hey error")
-    }
-
-
-    const imagepost = new model({
-      image: file.path
-    })
-    const savedimage = await imagepost.save()
-    Store.create(
-      {
-        portalId: req.body.portalId,
-        title: req.body.title,
-        description: req.body.description,
-        cost: req.body.cost,
-        image: image
-      }
-    )
-      .then(Store.find())
+  .post(cors.cors, (req, res, next) => {
+    Store.create(req.body)
       .then((store) => {
+        console.log('Form entry created ', store);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json({ store, success: true });
