@@ -36,7 +36,6 @@ announcementsRouter.route('/')
   })
   .post(cors.cors, upload.single('myFile'), async (req, res, next) => {
     const file = req.file
-    const file = req.file
     if (!file) {
       const error = new Error('Please upload a file')
       error.httpStatusCode = 400
