@@ -47,7 +47,7 @@ storeRouter.route('/')
   //     .catch((err) => next(err));
   // })
   .post(cors.cors, upload.single('myFile'), async (req, res, next) => {
-    const file = req.file
+    const file = req.image
     if (!file) {
       const error = new Error('Please upload a file')
       error.httpStatusCode = 400
