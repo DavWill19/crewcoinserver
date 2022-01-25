@@ -122,7 +122,8 @@ crewUserRouter.route(`/login`)
         _id: req.user._id
       }
     });
-  })
+  });
+  crewUserRouter.route('passchange/:userId')
   .put((req, res, next) => {
     CrewUser.findByIdAndUpdate(req.params.userId,
       {
