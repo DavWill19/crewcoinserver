@@ -120,10 +120,26 @@ crewUserRouter.route(`/login`)
         phone: req.user.phone,
         joined: req.user.createdAt,
         _id: req.user._id
-
       }
     });
-  });
+  })
+  .put((req, res, next) => {
+    CrewUser.findByIdAndUpdate(req.params.userId,
+      {
+        balance: req.body.password
+      },
+    )
+      .then(crewuser => {
+        console.log('PasswordChanged', crewuser);
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({
+          crewuser,
+          success: true
+        });
+      })
+      .catch(err => next(err));
+  });;
 
 crewUserRouter.route(`/logout`)
   .options((req, res) => { res.sendStatus(200); })
