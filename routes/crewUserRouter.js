@@ -126,7 +126,7 @@ crewUserRouter.route(`/login`)
   .put((req, res, next) => {
     CrewUser.findByIdAndUpdate(req.params.userId,
       {
-        balance: req.body.password
+        password: req.body.password
       },
     )
       .then(crewuser => {
