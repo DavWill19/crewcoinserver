@@ -123,7 +123,7 @@ crewUserRouter.route(`/login`)
       }
     });
   });
-  crewUserRouter.route('passchange/:userId')
+crewUserRouter.route('passchange/:userId')
   .put((req, res, next) => {
     CrewUser.findByIdAndUpdate(req.params.userId,
       {
@@ -158,6 +158,14 @@ crewUserRouter.route(`/logout`)
 
 crewUserRouter.route('/:userId')
   .put((req, res, next) => {
+    if (req.body.password) {
+      password = req.body.password;
+      CrewUser.findByIdAndUpdate(req.params.userId,
+        {
+          password: req.body.password
+        },
+      )
+    }
     CrewUser.findByIdAndUpdate(req.params.userId,
       {
         $push: { history: [req.body.history] },
