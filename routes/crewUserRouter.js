@@ -123,12 +123,10 @@ crewUserRouter.route(`/login`)
       }
     });
   });
-crewUserRouter.route('passchange/:userId')
+crewUserRouter.route('passchange/:username')
   .put((req, res, next) => {
-    CrewUser.findByIdAndUpdate(req.params.userId,
-      {
-        password: req.body.password
-      },
+    CrewUser.changeUserPassword(req.params.username,
+        req.body.password
     )
       .then(crewuser => {
         console.log('PasswordChanged', crewuser);
