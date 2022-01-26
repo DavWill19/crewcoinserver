@@ -123,7 +123,7 @@ crewUserRouter.route(`/login`)
       }
     });
   });
-crewUserRouter.route('passchange/:username')
+crewUserRouter.route('/passchange/:username')
   .put((req, res, next) => {
     CrewUser.changeUserPassword(req.params.username,
         req.body.password
