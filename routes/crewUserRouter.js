@@ -125,10 +125,12 @@ crewUserRouter.route(`/login`)
   });
 crewUserRouter.route('/passchange/:username')
   .put((req, res, next) => {
-    CrewUser.findByUsername(req.params.username).changeUserPassword(req.params.username,
-        req.body.password
-    )
+    CrewUser.findOne(req.params.username)
       .then(crewuser => {
+        crewuser.changeUserPassword(req.params.username,
+          req.body.password
+      )})
+      .then(() => {
         console.log('PasswordChanged', crewuser);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
