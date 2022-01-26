@@ -125,22 +125,24 @@ crewUserRouter.route(`/login`)
   });
 crewUserRouter.route('/passchange/:username')
   .put((req, res, next) => {
-    CrewUser.find({"username": req.params.username})
+    CrewUser.find({ "username": req.params.username })
       .then(crewuser => {
-        crewuser.changeUserPassword(req.params.username,
-          req.body.password
-      )})
-      .then(() => {
-        console.log('PasswordChanged', crewuser);
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json({
-          crewuser,
-          success: true
+        crewuser.setPassword(req.body.password, () => {
+          crewuser.save()
+            .then(() => {
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'application/json');
+              res.json({
+                success: true,
+                status: 'Password Changed Successfully!'
+              });
+            })
+            .catch(err => next(err));
         });
       })
       .catch(err => next(err));
-  });;
+  });
+
 
 crewUserRouter.route(`/logout`)
   .options((req, res) => { res.sendStatus(200); })
