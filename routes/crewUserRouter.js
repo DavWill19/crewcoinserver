@@ -125,7 +125,7 @@ crewUserRouter.route(`/login`)
   });
 crewUserRouter.route('/passchange/:username')
   .put((req, res, next) => {
-    CrewUser.changeUserPassword(req.params.username,
+    CrewUser.findByUsername(req.params.username).changeUserPassword(req.params.username,
         req.body.password
     )
       .then(crewuser => {
