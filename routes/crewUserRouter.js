@@ -184,6 +184,18 @@ crewUserRouter.route('/:userId')
         });
       })
       .catch(err => next(err));
+  })
+  .delete((req, res, next) => {
+    CrewUser.findByIdAndRemove(req.params.userId)
+      .then(() => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({
+          success: true,
+          status: 'User Deleted!'
+        });
+      })
+      .catch(err => next(err));
   });
 
 module.exports = crewUserRouter;
