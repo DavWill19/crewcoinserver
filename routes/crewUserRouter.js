@@ -124,7 +124,7 @@ crewUserRouter.route(`/login`)
     });
   });
 crewUserRouter.route('/passchange/:username')
-  .put((req, res, next) => {
+  .put((req, res) => {
     CrewUser.find({ "username": req.params.username })
       .then(crewuser => {
         crewuser.setPassword(req.body.password, () => {
@@ -134,7 +134,8 @@ crewUserRouter.route('/passchange/:username')
               res.setHeader('Content-Type', 'application/json');
               res.json({
                 success: true,
-                status: 'Password Changed Successfully!'
+                status: 'Password Changed Successfully!',
+                user: crewuser
               });
             })
             .catch(err => next(err));
