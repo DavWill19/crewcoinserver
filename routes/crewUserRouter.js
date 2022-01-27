@@ -127,18 +127,16 @@ crewUserRouter.route('/passchange/:username')
   .put((req, res) => {
     CrewUser.findOne({ "username": req.params.username })
       .then(crewuser => {
-        crewuser.changeUserPassword(crewuser.username, req.body.password, () => {
-          crewuser.save()
-            .then(() => {
-              res.statusCode = 200;
-              res.setHeader('Content-Type', 'application/json');
-              res.json({
-                success: true,
-                status: 'Password Changed Successfully!',
-                user: crewuser
-              });
-            })
-            .catch(err => next(err));
+        crewuser.changeUserPassword(crewuser.username, req.body.password)
+      })
+      .then((crewuser) => {
+        crewuser.save()
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({
+          success: true,
+          status: 'Password Changed Successfully!',
+          user: crewuser
         });
       })
       .catch(err => next(err));
