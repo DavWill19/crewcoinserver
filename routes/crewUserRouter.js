@@ -127,7 +127,7 @@ crewUserRouter.route('/passchange/:username')
   .put((req, res) => {
     CrewUser.findOne({ "username": req.params.username })
       .then(crewuser => {
-        crewuser.setPassword(req.body.password, () => {
+        crewuser.changeUserPassword(crewuser.username, req.body.password, () => {
           crewuser.save()
             .then(() => {
               res.statusCode = 200;
