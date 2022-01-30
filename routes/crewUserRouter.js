@@ -7,15 +7,15 @@ const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
   service: "Office365",
-  host: "smtp.office365.com",  
+  host: "smtp.office365.com",
   secureConnection: false,
   port: 25,
   auth: {
-  user: "admin@crew-coin.com",
-  pass: "Wendys#2484"
+    user: "admin@crew-coin.com",
+    pass: "Wendys#2484"
   },
-  tls:{
-      rejectUnauthorized: false
+  tls: {
+    rejectUnauthorized: false
   }
 });
 
@@ -50,7 +50,7 @@ crewUserRouter.route(`/signup`)
   .post((req, res) => {
     const mailData = {
       from: 'admin@crew-coin.com',  // sender address
-      to: 'davwill@live.com',   // list of receivers
+      to: req.username,   // list of receivers
       subject: 'Welcome to Crew Coin', // Subject line
       text: `Welcome to Crew Coin, ${req.body.firstname}!`, // plain text body
       html: 'Embedded image: <img src="cid:unique@crew-coin.com"/>',
@@ -78,6 +78,8 @@ crewUserRouter.route(`/signup`)
       <h1 style="display: inline">Welcome to Crew Coin, ${req.body.firstname}!</h1>
   </div>
 </b>
+<h2 style="text-align: center; ">Ask your manager what you can do today to earn your first Crew Coin!</h2> </b> 
+ </b></b></b>
       <p style="text-align: center; "> You have successfully signed up for Crew Coin. </p> </b>
       <p style="text-align: center;"> If you have any questions, please contact us at
       <a href="mailto:admin@crew-coin.com"> admin@crew-coin.com </a>
@@ -183,7 +185,7 @@ crewUserRouter.route('/passchange/:username')
   .put((req, res, next) => {
     const mailDataPassChange = {
       from: 'admin@crew-coin.com',  // sender address
-      to: 'davwill@live.com',   // list of receivers
+      to: req.username,   // list of receivers
       subject: 'Welcome to Crew Coin', // Subject line
       text: `Your password has been changed!`, // plain text body
       html: 'Embedded image: <img src="cid:unique@crew-coin.com"/>',
