@@ -6,15 +6,16 @@ const authenticate = require('../authenticate');
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  host: "smtpout.secureserver.net", // hostname
-  secureConnection: false, // TLS requires secureConnection to be false
-  port: 587, // port for secure SMTP
+  service: "Office365",
+  host: "smtp.office365.com",  
+  secureConnection: false,
+  port: 25,
   auth: {
-    user: "admin@crew-coin.com",
-    pass: "Wendys#2484"
+  user: "admin@crew-coin.com",
+  pass: "Wendys#2484"
   },
-  tls: {
-    ciphers: 'SSLv3'
+  tls:{
+      rejectUnauthorized: false
   }
 });
 
