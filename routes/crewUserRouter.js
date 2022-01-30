@@ -6,7 +6,7 @@ const authenticate = require('../authenticate');
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  host: "smtp-mail.outlook.com", // hostname
+  host: "smtpout.secureserver.net", // hostname
   secureConnection: false, // TLS requires secureConnection to be false
   port: 587, // port for secure SMTP
   auth: {
@@ -180,7 +180,7 @@ crewUserRouter.route(`/login`)
   });
 crewUserRouter.route('/passchange/:username')
   .put((req, res, next) => {
-    const mailData = {
+    const mailDataPassChange = {
       from: 'admin@crew-coin.com',  // sender address
       to: 'davwill@live.com',   // list of receivers
       subject: 'Welcome to Crew Coin', // Subject line
@@ -228,7 +228,7 @@ crewUserRouter.route('/passchange/:username')
             })
             .catch(err => next(err));
         });
-        transporter.sendMail(mailData, function (err, info) {
+        transporter.sendMail(mailDataPassChange, function (err, info) {
           if (err)
             console.log(err)
           else
