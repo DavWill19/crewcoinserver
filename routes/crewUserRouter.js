@@ -3,8 +3,20 @@ const CrewUser = require('../models/crewuser');
 const passport = require('passport');
 const crewUserRouter = express.Router();
 const authenticate = require('../authenticate');
+const nodemailer = require('nodemailer');
 
-
+const transporter = nodemailer.createTransport({
+  host: "smtp-mail.outlook.com", // hostname
+  secureConnection: false, // TLS requires secureConnection to be false
+  port: 587, // port for secure SMTP
+  auth: {
+      user: "admin@crew-coin.com",
+      pass: "Wendys#2484"
+  },
+  tls: {
+      ciphers:'SSLv3'
+  }
+});
 
 /* GET users listing. */
 
@@ -35,6 +47,42 @@ crewUserRouter.route('/reload/:_id')
 crewUserRouter.route(`/signup`)
   .options((req, res) => { res.sendStatus(200); })
   .post((req, res) => {
+    const mailData = {
+      from: 'admin@crew-coin.com',  // sender address
+      to: 'davwill@live.com',   // list of receivers
+      subject: 'Welcome to Crew Coin', // Subject line
+      text: `Welcome to Crew Coin, ${req.body.firstname}!`, // plain text body
+      html: 'Embedded image: <img src="cid:unique@crew-coin.com"/>',
+      html: 'Embedded image: <img src="cid:uniquegif@crew-coin.com"/>',
+      attachments: [{
+        filename: 'crewcoinlogo.png',
+        path: '.\\public\\images\\crewcoinlogo.png',
+        cid: 'unique@crew-coin.com' //same cid value as in the html img src
+      },
+      {
+        filename: 'coinIconSmall.gif',
+        path: '.\\public\\images\\coinIconSmall.gif',
+        cid: 'uniquegif@crew-coin.com' //same cid value as in the html img src
+      }],
+      html: `
+      <img style="width: 50%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 350px;" 
+      src="crewcoinlogo.png">
+</br>
+<div style="text-align: center; justify-content: space-evenly;" >
+      <img style="width: 50px; flex: 1" src="coinIconSmall.gif">
+      <h1 style="display: inline">Welcome to Crew Coin, ${req.body.firstname}!</h1>
+  </div>
+</b>
+      <p style="text-align: center; "> You have successfully signed up for Crew Coin. </p> </b>
+      <p style="text-align: center;"> If you have any questions, please contact us at
+      <a href="mailto:admin@crew-coin.com"> admin@crew-coin.com </a>
+      `,
+    };
+
     CrewUser.register(
       new CrewUser({ username: req.body.username }),
       req.body.password,
@@ -94,9 +142,16 @@ crewUserRouter.route(`/signup`)
               });
             });
           });
+          transporter.sendMail(mailData, function (err, info) {
+            if (err)
+              console.log(err)
+            else
+              console.log(info);
+          });
         }
       }
     );
+    
   });
 crewUserRouter.route(`/login`)
   .options((req, res) => { res.sendStatus(200); })
@@ -125,6 +180,40 @@ crewUserRouter.route(`/login`)
   });
 crewUserRouter.route('/passchange/:username')
   .put((req, res, next) => {
+    const mailData = {
+      from: 'admin@crew-coin.com',  // sender address
+      to: 'davwill@live.com',   // list of receivers
+      subject: 'Welcome to Crew Coin', // Subject line
+      text: `Your password has been changed!`, // plain text body
+      html: 'Embedded image: <img src="cid:unique@crew-coin.com"/>',
+      html: 'Embedded image: <img src="cid:uniquegif@crew-coin.com"/>',
+      attachments: [{
+        filename: 'crewcoinlogo.png',
+        path: '.\\public\\images\\crewcoinlogo.png',
+        cid: 'unique@crew-coin.com' //same cid value as in the html img src
+      },
+      {
+        filename: 'coinIconSmall.gif',
+        path: '.\\public\\images\\coinIconSmall.gif',
+        cid: 'uniquegif@crew-coin.com' //same cid value as in the html img src
+      }],
+      html: `
+      <img style="width: 50%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 350px;" 
+      src="crewcoinlogo.png">
+    </br>
+    <div style="text-align: center; justify-content: space-evenly;" >
+      <img style="width: 50px; flex: 1" src="coinIconSmall.gif">
+      <h1 style="display: inline">Your password has been changed!</h1>
+    </div>
+    </b>
+      <p style="text-align: center;"> If you have any questions, please contact us at
+      <a href="mailto:admin@crew-coin.com"> admin@crew-coin.com </a>
+      `,
+    };
     CrewUser.findOne({ "username": req.params.username })
       .then(crewuser => {
         crewuser.setPassword(req.body.password, () => {
