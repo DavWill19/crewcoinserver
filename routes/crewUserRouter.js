@@ -10,11 +10,11 @@ const transporter = nodemailer.createTransport({
   secureConnection: false, // TLS requires secureConnection to be false
   port: 587, // port for secure SMTP
   auth: {
-      user: "admin@crew-coin.com",
-      pass: "Wendys#2484"
+    user: "admin@crew-coin.com",
+    pass: "Wendys#2484"
   },
   tls: {
-      ciphers:'SSLv3'
+    ciphers: 'SSLv3'
   }
 });
 
@@ -151,7 +151,7 @@ crewUserRouter.route(`/signup`)
         }
       }
     );
-    
+
   });
 crewUserRouter.route(`/login`)
   .options((req, res) => { res.sendStatus(200); })
@@ -227,6 +227,12 @@ crewUserRouter.route('/passchange/:username')
               });
             })
             .catch(err => next(err));
+        });
+        transporter.sendMail(mailData, function (err, info) {
+          if (err)
+            console.log(err)
+          else
+            console.log(info);
         });
       })
       .catch(err => next(err));
