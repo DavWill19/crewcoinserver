@@ -57,12 +57,12 @@ crewUserRouter.route(`/signup`)
       html: 'Embedded image: <img src="cid:uniquegif@crew-coin.com"/>',
       attachments: [{
         filename: 'crewcoinlogo.png',
-        path: '.\\public\\images\\crewcoinlogo.png',
+        path: 'https://firebasestorage.googleapis.com/v0/b/crewcoin-3d719.appspot.com/o/crewcoinlogo.png?alt=media&token=04d9cef4-abb6-4579-a14c-eacc3d7c2983',
         cid: 'unique@crew-coin.com' //same cid value as in the html img src
       },
       {
         filename: 'coinIconSmall.gif',
-        path: '.\\public\\images\\coinIconSmall.gif',
+        path: 'https://firebasestorage.googleapis.com/v0/b/crewcoin-3d719.appspot.com/o/coinIconSmall.gif?alt=media&token=4d227f37-88e7-4645-9dd1-7d806ed7307e',
         cid: 'uniquegif@crew-coin.com' //same cid value as in the html img src
       }],
       html: `
@@ -190,12 +190,12 @@ crewUserRouter.route('/passchange/:username')
       html: 'Embedded image: <img src="cid:uniquegif@crew-coin.com"/>',
       attachments: [{
         filename: 'crewcoinlogo.png',
-        path: '.\\public\\images\\crewcoinlogo.png',
+        path: 'https://firebasestorage.googleapis.com/v0/b/crewcoin-3d719.appspot.com/o/crewcoinlogo.png?alt=media&token=04d9cef4-abb6-4579-a14c-eacc3d7c2983',
         cid: 'unique@crew-coin.com' //same cid value as in the html img src
       },
       {
         filename: 'coinIconSmall.gif',
-        path: '.\\public\\images\\coinIconSmall.gif',
+        path: 'https://firebasestorage.googleapis.com/v0/b/crewcoin-3d719.appspot.com/o/coinIconSmall.gif?alt=media&token=4d227f37-88e7-4645-9dd1-7d806ed7307e',
         cid: 'uniquegif@crew-coin.com' //same cid value as in the html img src
       }],
       html: `
