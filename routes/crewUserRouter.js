@@ -107,8 +107,11 @@ crewUserRouter.route(`/signup`)
           if (req.body.organization) {
             crewuser.organization = req.body.organization;
           }
-          if (req.body.balnce) {
+          if (req.body.balance) {
             crewuser.balance = req.body.balance;
+          }
+          if (req.body.pushToken) {
+            crewuser.balance = req.body.pushToken;
           }
           if (req.body.history) {
             crewuser.history = req.body.history;
@@ -139,6 +142,7 @@ crewUserRouter.route(`/signup`)
                   balance: req.user.balance,
                   history: req.user.history,
                   phone: req.user.phone,
+                  pushToken: req.user.pushToken,
                   joined: req.user.createdAt,
                   id: req.user._id
                 }
