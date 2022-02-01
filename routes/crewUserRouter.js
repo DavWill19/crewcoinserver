@@ -139,7 +139,6 @@ crewUserRouter.route(`/signup`)
                   portalId: req.user.portalId,
                   organization: req.user.organization,
                   admin: req.user.admin,
-                  balance: req.user.balance,
                   history: req.user.history,
                   phone: req.user.phone,
                   pushToken: req.user.pushToken,
