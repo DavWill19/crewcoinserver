@@ -111,7 +111,7 @@ crewUserRouter.route(`/signup`)
             crewuser.balance = req.body.balance;
           }
           if (req.body.pushToken) {
-            crewuser.balance = req.body.pushToken;
+            crewuser.pushToken = req.body.pushToken;
           }
           if (req.body.history) {
             crewuser.history = req.body.history;
@@ -139,6 +139,7 @@ crewUserRouter.route(`/signup`)
                   portalId: req.user.portalId,
                   organization: req.user.organization,
                   admin: req.user.admin,
+                  balance: req.user.balance,
                   history: req.user.history,
                   phone: req.user.phone,
                   pushToken: req.user.pushToken,
