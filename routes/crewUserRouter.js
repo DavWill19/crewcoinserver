@@ -308,12 +308,16 @@ crewUserRouter.route('/send/:userId')
         balance: req.body.balance
       },
     ).then(crewuser => {
-    CrewUser.findOneAndUpdate({_id: req.body.userId},
+      crewuser.save()
+    })
+    CrewUser.findOneAndUpdate({ _id: req.body.userId },
       {
         $push: { history: [req.body.history2] },
         balance: req.body.balance2
       },
-    )})                                                 
+    ).then(crewuser => {
+      crewuser.save()
+    })
       .then(crewuser => {
         console.log('History entry created ', crewuser);
         res.statusCode = 200;
