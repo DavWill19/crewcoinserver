@@ -302,27 +302,29 @@ crewUserRouter.route('/:userId')
 
 crewUserRouter.route('/send/:userId')
   .put((req, res, next) => {
-    CrewUser.findOneAndUpdate({ _id: req.params.userId},
+    CrewUser.findOneAndUpdate({ _id: req.body.userId },
       {
         $push: { history: [req.body.history] },
         balance: req.body.balance
       },
-    )
-      CrewUser.findOneAndUpdate({ _id: req.body.userId},
+    ).then(() => {
+      CrewUser.findOneAndUpdate({ _id: req.params.userId },
         {
           $push: { history: [req.body.history2] },
           balance: req.body.balance2
         },
       )
-      .then(() => {
-        console.log('History entry created ');
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json({
-          success: true
-        });
-      })
-      .catch(err => next(err));
+        .then(() => {
+          console.log('History entry created ');
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json({
+            success: true
+          });
+        })
+        .catch(err => next(err));
+    })
+      .catch(err => next(console.log(err)))
   });
 
 module.exports = crewUserRouter;
