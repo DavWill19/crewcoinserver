@@ -308,7 +308,7 @@ crewUserRouter.route('/send/:userId')
         balance: req.body.balance
       },
     )
-    CrewUser.findOneAndUpdate({ _id: req.body.userId },
+    CrewUser.findByIdAndUpdate(req.body.userId,
       {
         $push: { history: [req.body.history2] },
         balance: req.body.balance2
