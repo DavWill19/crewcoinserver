@@ -300,15 +300,15 @@ crewUserRouter.route('/:userId')
       .catch(err => next(err));
   });
 
-crewUserRouter.route('/send/:userId')
+crewUserRouter.route('/send')
   .put((req, res, next) => {
-    CrewUser.findOneAndUpdate({ _id: req.params.userId },
+    CrewUser.findByIdAndUpdate(req.body.userId,
       {
         $push: { history: [req.body.history] },
         balance: req.body.balance
       },
     )
-    CrewUser.findByIdAndUpdate(req.body.userId,
+    CrewUser.findByIdAndUpdate(req.body.userId2,
       {
         $push: { history: [req.body.history2] },
         balance: req.body.balance2
