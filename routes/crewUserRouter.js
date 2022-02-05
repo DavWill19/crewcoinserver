@@ -304,13 +304,13 @@ crewUserRouter.route('/send/:userId')
   .put((req, res, next) => {
     CrewUser.findOneAndUpdate({ _id: req.body.userId },
       {
-        $push: { history: [req.body.history] },
+        $push: { history: [req.body.history2] },
         balance: req.body.balance
       },
     ).then(() => {
       CrewUser.findOneAndUpdate({ _id: req.params.userId },
         {
-          $push: { history: [req.body.history2] },
+          $push: { history: [req.body.history] },
           balance: req.body.balance2
         },
       )
