@@ -50,7 +50,7 @@ crewUserRouter.route(`/signup`)
   .post((req, res) => {
     const mailData = {
       from: 'admin@crew-coin.com',  // sender address
-      to: req.username,   // list of receivers
+      to: req.body.username,   // list of receivers
       subject: 'Welcome to Crew Coin', // Subject line
       text: `Welcome to Crew Coin, ${req.body.firstname}!`, // plain text body
       html: 'Embedded image: <img src="cid:unique@crew-coin.com"/>',
@@ -78,7 +78,7 @@ crewUserRouter.route(`/signup`)
       <h1 style="display: inline">Welcome to Crew Coin, ${req.body.firstname}!</h1>
   </div>
 </b>
-<h2 style="text-align: center; ">Ask your manager what you can do today to earn your first Crew Coin!</h2> </b> 
+<h2 style="text-align: center; ">Ask your manager what you can do to earn your first Crew Coin!</h2> </b> 
  </b></b></b>
       <p style="text-align: center; "> You have successfully signed up for Crew Coin. </p> </b>
       <p style="text-align: center;"> If you have any questions, please contact us at
