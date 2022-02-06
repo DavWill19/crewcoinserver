@@ -314,7 +314,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
       </br>
       <div style="text-align: center; justify-content: space-evenly;" >
         <h1 style="display: inline">${user}, Your purchase has been confirmed!</h1>
-        <h2 style="display: inline">${user}, purchased: ${prize} for ${cost} </h2>
+        <h2 style="display: inline">${user} purchased: ${prize} for ${cost} Crew Coins</h2>
       </div>
       </b>
         <p style="text-align: center;"> Please allow time for processing. If you have any questions, please contact your administrator at
