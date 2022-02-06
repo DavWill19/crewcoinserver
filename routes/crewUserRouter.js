@@ -265,6 +265,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
     const image = req.body.history.prize.image;
     const email = req.body.email;
     const user = req.body.name;
+    const portalId = req.body.portalId;
     if (req.body.password) {
       password = req.body.password;
       CrewUser.findByIdAndUpdate(req.params.userId,
@@ -274,9 +275,8 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
       )
     }
     if (req.body.purchase) {
-      CrewUser.find({portalId: req.body.portalId, admin: true})
+      CrewUser.find({portalId: portalId, admin: true})
         .then(crewuser => {
-          const admin = crewuser
           const adminEmail = crewuser.username;
           const mailDataPurchase = {
             from: 'admin@crew-coin.com',  // sender address
