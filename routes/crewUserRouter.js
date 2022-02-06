@@ -190,7 +190,7 @@ crewUserRouter.route('/passchange/:username')
     const mailDataPassChange = {
       from: 'admin@crew-coin.com',  // sender address
       to: req.username,   // list of receivers
-      subject: 'Welcome to Crew Coin', // Subject line
+      subject: 'Crew Coin Password Change', // Subject line
       text: `Your password has been changed!`, // plain text body
       html: 'Embedded image: <img src="cid:unique@crew-coin.com"/>',
       html: 'Embedded image: <img src="cid:uniquegif@crew-coin.com"/>',
@@ -260,7 +260,7 @@ crewUserRouter.route(`/logout`)
     }
   });
 
-crewUserRouter.route('/:userId')
+crewUserRouter.route('/:userId') ////////////////////////////////////
   .put((req, res, next) => {
     if (req.body.password) {
       password = req.body.password;
@@ -270,35 +270,94 @@ crewUserRouter.route('/:userId')
         },
       )
     }
-    CrewUser.findByIdAndUpdate(req.params.userId,
-      {
-        $push: { history: [req.body.history] },
-        balance: req.body.balance
-      },
-    )
-      .then(crewuser => {
-        console.log('History entry created ', crewuser);
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json({
-          crewuser,
-          success: true
-        });
-      })
-      .catch(err => next(err));
+    if (req.body.purchase) {
+      CrewUser.findOne({ portalId: req.body.portalId })
+        .then(crewuser => {
+          const adminEmail = crewuser.username;
+          const mailDataPurchase = {
+            from: 'admin@crew-coin.com',  // sender address
+            to: req.body.username, adminEmail,   // list of receivers
+            subject: 'New Crew Coin Purchase!', // Subject line
+            text: `Your password has been changed!`, // plain text body
+            html: 'Embedded image: <img src="cid:unique@crew-coin.com"/>',
+            html: 'Embedded image: <img src="cid:uniquegif@crew-coin.com"/>',
+            html: 'Embedded image: <img src="cid:prize@crew-coin.com"/>',
+            attachments: [{
+              filename: 'crewcoinlogo.png',
+              path: 'https://firebasestorage.googleapis.com/v0/b/crewcoin-3d719.appspot.com/o/crewcoinlogo.png?alt=media&token=04d9cef4-abb6-4579-a14c-eacc3d7c2983',
+              cid: 'unique@crew-coin.com' //same cid value as in the html img src
+            },
+            {
+              filename: 'coinIconSmall.gif',
+              path: 'https://firebasestorage.googleapis.com/v0/b/crewcoin-3d719.appspot.com/o/coinIconSmall.gif?alt=media&token=4d227f37-88e7-4645-9dd1-7d806ed7307e',
+              cid: 'uniquegif@crew-coin.com' //same cid value as in the html img src
+            },
+            {
+              filename: 'prize.png',
+              path: `${req.body.prize.image}`,
+              cid: 'prize@crew-coin.com' //same cid value as in the html img src
+            }],
+            html: `
+        <img style="width: 50%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 350px;" 
+        src="crewcoinlogo.png">
+        <img style="width: 50%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 350px;" 
+        src="prize.png">
+      </br>
+      <div style="text-align: center; justify-content: space-evenly;" >
+        <img style="width: 50px; flex: 1" src="coinIconSmall.gif">
+        <h1 style="display: inline">Your purchase has been confirmed!</h1>
+      </div>
+      </b>
+        <p style="text-align: center;"> Please allow time for processing. If you have any questions, please contact your administrator at
+        <a href="mailto:${adminEmail}"> ${adminEmail} </a> </p>
+        `,
+          };
+          transporter.sendMail(mailDataPurchase, function (err, info) {
+            if (err)
+              console.log(err)
+            else
+              console.log(info);
+          })
+        })
+    }   
+CrewUser.findByIdAndUpdate(req.params.userId,
+  {
+    $push: { history: [req.body.history] },
+    balance: req.body.balance
+  },
+)
+  .then(crewuser => {
+    console.log('History entry created ', crewuser);
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json({
+      crewuser,
+      success: true
+    });
   })
-  .delete((req, res, next) => {
-    CrewUser.findByIdAndRemove(req.params.userId)
-      .then(() => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json({
-          success: true,
-          status: 'User Deleted!'
-        });
-      })
-      .catch(err => next(err));
-  });
+  .catch(err => next(err));
+    })
+    
+  .delete ((req, res, next) => {
+  CrewUser.findByIdAndRemove(req.params.userId)
+    .then(() => {
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.json({
+        success: true,
+        status: 'User Deleted!'
+      });
+    })
+    .catch(err => next(err));
+});
 
 crewUserRouter.route('/send/:userId')
   .put((req, res, next) => {
