@@ -263,6 +263,7 @@ crewUserRouter.route(`/logout`)
 crewUserRouter.route('/:userId') ////////////////////////////////////
   .put((req, res, next) => {
     const image = req.body.history.prize.image;
+    const email = req.body.email;
     if (req.body.password) {
       password = req.body.password;
       CrewUser.findByIdAndUpdate(req.params.userId,
@@ -277,7 +278,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
           const adminEmail = crewuser.username;
           const mailDataPurchase = {
             from: 'admin@crew-coin.com',  // sender address
-            to: req.body.username, adminEmail,   // list of receivers
+            to: email, adminEmail,   // list of receivers
             subject: 'New Crew Coin Purchase!', // Subject line
             text: `Your password has been changed!`, // plain text body
             html: 'Embedded image: <img src="cid:unique@crew-coin.com"/>',
