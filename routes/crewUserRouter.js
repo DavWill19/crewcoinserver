@@ -273,9 +273,10 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
       )
     }
     if (req.body.purchase) {
-      CrewUser.find({ portalId: req.body.portalId })
+      CrewUser.findMany({ portalId: req.body.portalId })
         .then(crewuser => {
-          const adminEmail = crewuser.username;
+          const admin = crewuser.filter(user => user.admin === true); 
+          const adminEmail = admin.username;
           const mailDataPurchase = {
             from: 'admin@crew-coin.com',  // sender address
             to: email, adminEmail,   // list of receivers
