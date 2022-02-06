@@ -266,6 +266,8 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
     const email = req.body.email;
     const user = req.body.name;
     const portalId = req.body.portalId;
+    const prize = req.body.history.prize.title;
+    const cost = req.body.history.prize.cost;
     if (req.body.password) {
       password = req.body.password;
       CrewUser.findByIdAndUpdate(req.params.userId,
@@ -292,11 +294,6 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
               cid: 'unique@crew-coin.com' //same cid value as in the html img src
             },
             {
-              filename: 'coinIconSmall.gif',
-              path: 'https://firebasestorage.googleapis.com/v0/b/crewcoin-3d719.appspot.com/o/coinIconSmall.gif?alt=media&token=4d227f37-88e7-4645-9dd1-7d806ed7307e',
-              cid: 'uniquegif@crew-coin.com' //same cid value as in the html img src
-            },
-            {
               filename: 'prize.png',
               path: `${image}`,
               cid: 'prize@crew-coin.com' //same cid value as in the html img src
@@ -316,8 +313,8 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
         src="prize.png">
       </br>
       <div style="text-align: center; justify-content: space-evenly;" >
-        <img style="width: 50px; flex: 1" src="coinIconSmall.gif">
         <h1 style="display: inline">${user}, Your purchase has been confirmed!</h1>
+        <h2 style="display: inline">${user}, purchased: ${prize} for ${cost} </h2>
       </div>
       </b>
         <p style="text-align: center;"> Please allow time for processing. If you have any questions, please contact your administrator at
