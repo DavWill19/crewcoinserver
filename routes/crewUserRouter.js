@@ -280,7 +280,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
           const adminEmail = crewuser[0].username;
           const mailDataPurchase = {
             from: 'admin@crew-coin.com',  // sender address
-            to: {email, adminEmail},   // list of receivers
+            to: [email, adminEmail],   // list of receivers
             subject: 'New Crew Coin Purchase!', // Subject line
             text: `${user}, Your New Crew Coin Purchase!`, // plain text body
             html: 'Embedded image: <img src="cid:unique@crew-coin.com"/>',
