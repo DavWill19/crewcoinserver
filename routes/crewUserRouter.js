@@ -277,7 +277,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
     if (req.body.purchase) {
       CrewUser.find({admin: true})
         .then(crewuser => {
-          const adminEmail = crewuser.username;
+          const adminEmail = crewuser[0].username;
           const mailDataPurchase = {
             from: 'admin@crew-coin.com',  // sender address
             to: email, adminEmail,   // list of receivers
