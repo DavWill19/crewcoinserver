@@ -262,7 +262,7 @@ crewUserRouter.route(`/logout`)
 
 crewUserRouter.route('/:userId') ////////////////////////////////////
   .put((req, res, next) => {
-    const image = req.body.prize.image;
+    const image = req.body.history.prize.image;
     if (req.body.password) {
       password = req.body.password;
       CrewUser.findByIdAndUpdate(req.params.userId,
