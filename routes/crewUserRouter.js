@@ -262,6 +262,7 @@ crewUserRouter.route(`/logout`)
 
 crewUserRouter.route('/:userId') ////////////////////////////////////
   .put((req, res, next) => {
+    const image = req.body.prize.image;
     if (req.body.password) {
       password = req.body.password;
       CrewUser.findByIdAndUpdate(req.params.userId,
@@ -271,7 +272,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
       )
     }
     if (req.body.purchase) {
-      CrewUser.findOne({ portalId: req.body.portalId })
+      CrewUser.find({ portalId: req.body.portalId })
         .then(crewuser => {
           const adminEmail = crewuser.username;
           const mailDataPurchase = {
@@ -294,7 +295,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
             },
             {
               filename: 'prize.png',
-              path: `${req.body.prize.image}`,
+              path: `${image}`,
               cid: 'prize@crew-coin.com' //same cid value as in the html img src
             }],
             html: `
