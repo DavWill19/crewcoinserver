@@ -264,6 +264,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
   .put((req, res, next) => {
     const image = req.body.history.prize.image;
     const email = req.body.email;
+    const user = req.body.name;
     if (req.body.password) {
       password = req.body.password;
       CrewUser.findByIdAndUpdate(req.params.userId,
@@ -273,15 +274,15 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
       )
     }
     if (req.body.purchase) {
-      CrewUser.find({ portalId: req.body.portalId })
+      CrewUser.getUsers({ filter: { admin: true } })
         .then(crewuser => {
-          const admin = crewuser.filter(user => user.admin === true); 
-          const adminEmail = admin.username;
+          const admin = crewuser
+          const adminEmail = crewuser.username;
           const mailDataPurchase = {
             from: 'admin@crew-coin.com',  // sender address
             to: email, adminEmail,   // list of receivers
             subject: 'New Crew Coin Purchase!', // Subject line
-            text: `Your password has been changed!`, // plain text body
+            text: `${user}, Your New Crew Coin Purchase!`, // plain text body
             html: 'Embedded image: <img src="cid:unique@crew-coin.com"/>',
             html: 'Embedded image: <img src="cid:uniquegif@crew-coin.com"/>',
             html: 'Embedded image: <img src="cid:prize@crew-coin.com"/>',
@@ -316,7 +317,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
       </br>
       <div style="text-align: center; justify-content: space-evenly;" >
         <img style="width: 50px; flex: 1" src="coinIconSmall.gif">
-        <h1 style="display: inline">Your purchase has been confirmed!</h1>
+        <h1 style="display: inline">${user}, Your purchase has been confirmed!</h1>
       </div>
       </b>
         <p style="text-align: center;"> Please allow time for processing. If you have any questions, please contact your administrator at
