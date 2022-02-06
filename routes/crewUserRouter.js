@@ -274,7 +274,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
       )
     }
     if (req.body.purchase) {
-      CrewUser.getUsers({ filter: { admin: true } })
+      CrewUser.getUsers( { portalId: req.body.portalId }, {filter: { admin: true }})
         .then(crewuser => {
           const admin = crewuser
           const adminEmail = crewuser.username;
