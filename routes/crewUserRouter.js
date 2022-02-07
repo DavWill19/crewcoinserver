@@ -313,7 +313,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
         src="prize.png">
       </br>
       <div style="text-align: center; justify-content: space-evenly;" >
-        <h1 style="display: inline">${user}, Your purchase has been confirmed!</h1>
+        <h1 style="display: inline">${user}, Your purchase has been confirmed!</h1> <br>
         <h2 style="display: inline">${user} purchased: ${prize} for ${cost} Crew Coins</h2>
       </div>
       </b>
