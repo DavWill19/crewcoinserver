@@ -261,7 +261,7 @@ crewUserRouter.route(`/logout`)
   });
 
 crewUserRouter.route('/:userId') ////////////////////////////////////
-  .put((req, res, next) => {
+  .put(authenticate.verifyUser, (req, res, next) => {
     const image = req.body.history.prize.image;
     const email = req.body.email;
     const user = req.body.name;
