@@ -186,7 +186,7 @@ crewUserRouter.route(`/login`)
     });
   });
 crewUserRouter.route('/passchange/:username')
-  .put((req, res, next) => {
+  .put(authenticate.verifyUser, (req, res, next) => {
     const mailDataPassChange = {
       from: 'admin@crew-coin.com',  // sender address
       to: req.username,   // list of receivers
@@ -261,7 +261,7 @@ crewUserRouter.route(`/logout`)
   });
 
 crewUserRouter.route('/:userId') ////////////////////////////////////
-  .put(authenticate.verifyUser, (req, res, next) => {
+  .put(authenticate.verifyAdmin, (req, res, next) => {
     const image = req.body.history.prize.image;
     const email = req.body.email;
     const user = req.body.name;
@@ -361,7 +361,7 @@ CrewUser.findByIdAndUpdate(req.params.userId,
 });
 
 crewUserRouter.route('/send/:userId')
-  .put((req, res, next) => {
+  .put(authenticate.verifyUser, (req, res, next) => {
     CrewUser.findOneAndUpdate({ _id: req.body.userId },
       {
         $push: { history: [req.body.history2] },
