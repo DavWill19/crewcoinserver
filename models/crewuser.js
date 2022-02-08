@@ -56,6 +56,4 @@ const crewuserSchema = new Schema({
 
 crewuserSchema.plugin(passportLocalMongoose);
 
-const CrewUser = mongoose.model('Crewuser', crewuserSchema);
-
-module.exports = CrewUser;
+module.exports = mongoose.model('Crewuser', crewuserSchema);
