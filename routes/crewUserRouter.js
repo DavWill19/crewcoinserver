@@ -4,6 +4,7 @@ const passport = require('passport');
 const crewUserRouter = express.Router();
 const authenticate = require('../authenticate');
 const nodemailer = require('nodemailer');
+const config = require('../config');
 
 const transporter = nodemailer.createTransport({
   service: "Office365",
@@ -11,8 +12,8 @@ const transporter = nodemailer.createTransport({
   secureConnection: false,
   port: 25,
   auth: {
-    user: "admin@crew-coin.com",
-    pass: "Wendys#2484"
+    user: config.auth.user,
+    pass: config.auth.pass
   },
   tls: {
     rejectUnauthorized: false
