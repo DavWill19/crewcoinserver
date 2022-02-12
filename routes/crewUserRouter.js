@@ -281,6 +281,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
     const user = req.body.name;
     const portalId = req.body.portalId;
     const prize = req.body.history.prize.title;
+    const prizeDescription = req.body.history.prize.description;
     const cost = req.body.history.prize.cost;
     if (req.body.password) {
       password = req.body.password;
@@ -330,9 +331,11 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
       <div style="text-align: center; justify-content: space-evenly;" >
         <h1 style="display: inline">${user}, Your purchase has been confirmed!</h1> <br>
         <h2 style="display: inline">${user} purchased: ${prize} for ${coin(cost)}</h2>
+        <br>
+        <h3 style="display: inline">Description: ${prizeDescription}</h3>
       </div>
-      </b>
-        <p style="text-align: center;"> Please allow time for processing.</p> <br>
+      </br>
+        <p style="text-align: center;"> Please allow time for processing.</p> </br>
         <p style="text-align: center;"> If you have any questions, please contact your administrator at
         <a href="mailto:${adminEmail}"> ${adminEmail} </a> </p>
         `,
