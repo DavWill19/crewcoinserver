@@ -320,7 +320,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
         margin-right: auto;
         width: 350px;" 
         src="crewcoinlogo.png">
-        <h1 style="text-align: center; color="#FFD700">New Purchase!</h1> <br>
+        <h1 style="text-align: center; color="#FFD700;">New Purchase!</h1> <br>
         <img style="width: 50%;
         display: block;
         margin-left: auto;
@@ -329,13 +329,14 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
         src="prize.png">
       </br>
       <div style="text-align: center; justify-content: space-evenly;" >
-        <h1 style="display: inline">${user}, Your purchase has been confirmed!</h1> <br>
-        <h2 style="display: inline">${user} purchased: ${prize} for ${coin(cost)}</h2>
-        <br>
-        <h3 style="display: inline">Description: ${prizeDescription}</h3>
+        <h1 style="display: inline">${user}, Your purchase has been confirmed!</h1><br>
+        <h2 style="display: inline"> Employee Name: ${user}</h2><br>
+        <h2 style="display: inline">Item: ${prize}</h2><br>
+        <h3 style="display: inline">Description: ${prizeDescription}</h3><br>
+        <h2 style="display: inline">Cost: for ${coin(cost)}<h2>
       </div>
-      </br>
-        <p style="text-align: center;"> Please allow time for processing.</p> </br>
+      <hr>
+        <p style="text-align: center;"> Please allow time for processing.</p><br>
         <p style="text-align: center;"> If you have any questions, please contact your administrator at
         <a href="mailto:${adminEmail}"> ${adminEmail} </a> </p>
         `,
