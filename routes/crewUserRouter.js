@@ -6,6 +6,19 @@ const authenticate = require('../authenticate');
 const nodemailer = require('nodemailer');
 const config = require('../config');
 
+
+function coin(cost) {
+  if (cost > 1) {
+    return (
+      `${cost} Crew Coins`
+    )
+  } else {
+    return (
+      `${cost} Crew Coin`
+    )
+  }
+}
+
 const transporter = nodemailer.createTransport({
   service: "Office365",
   host: "smtp.office365.com",
@@ -300,6 +313,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
               cid: 'prize@crew-coin.com' //same cid value as in the html img src
             }],
             html: `
+        <h1 style="display: inline">New Purchase!</h1> <br>
         <img style="width: 50%;
         display: block;
         margin-left: auto;
@@ -315,10 +329,11 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
       </br>
       <div style="text-align: center; justify-content: space-evenly;" >
         <h1 style="display: inline">${user}, Your purchase has been confirmed!</h1> <br>
-        <h2 style="display: inline">${user} purchased: ${prize} for ${cost} Crew Coins</h2>
+        <h2 style="display: inline">${user} purchased: ${prize} for ${coin(cost)}</h2>
       </div>
       </b>
-        <p style="text-align: center;"> Please allow time for processing. If you have any questions, please contact your administrator at
+        <p style="text-align: center;"> Please allow time for processing.</p> <br>
+        <p style="text-align: center;"> If you have any questions, please contact your administrator at
         <a href="mailto:${adminEmail}"> ${adminEmail} </a> </p>
         `,
           };
