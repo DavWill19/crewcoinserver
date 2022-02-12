@@ -313,13 +313,13 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
               cid: 'prize@crew-coin.com' //same cid value as in the html img src
             }],
             html: `
-        <h1 style="display: inline">New Purchase!</h1> <br>
         <img style="width: 50%;
         display: block;
         margin-left: auto;
         margin-right: auto;
         width: 350px;" 
         src="crewcoinlogo.png">
+        <h1 style="text-align: center; color="#FFD700">New Purchase!</h1> <br>
         <img style="width: 50%;
         display: block;
         margin-left: auto;
