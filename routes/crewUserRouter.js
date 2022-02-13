@@ -252,7 +252,7 @@ crewUserRouter.route(`/logout`)
 crewUserRouter.route('/:userId') ////////////////////////////////////
   .put(authenticate.verifyUser, (req, res, next) => {
     const image = req.body.history.prize.image;
-    const email = req.body.email;
+    const email1 = req.body.email;
     const user = req.body.name;
     const portalId = req.body.portalId;
     const prize = req.body.history.prize.title;
@@ -272,7 +272,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
           const adminEmail = crewuser[0].username;
           const mailDataPurchase = {
             from: 'admin@crew-coin.com',  // sender address
-            to: [email, adminEmail],   // list of receivers
+            to: [email1, adminEmail],   // list of receivers
             subject: 'New Crew Coin Purchase!', // Subject line
             text: `${user}, Your New Crew Coin Purchase!`, // plain text body
             html: email.purchase(user, prize, prizeDescription, cost, adminEmail, logo, gif, image),
