@@ -5,6 +5,7 @@ const crewUserRouter = express.Router();
 const authenticate = require('../authenticate');
 const nodemailer = require('nodemailer');
 const config = require('../config');
+const email = require('../email');
 
 
 function coin(cost) {
@@ -18,6 +19,9 @@ function coin(cost) {
     )
   }
 }
+
+const logo = 'https://firebasestorage.googleapis.com/v0/b/crewcoin-3d719.appspot.com/o/crewcoinlogo.png?alt=media&token=04d9cef4-abb6-4579-a14c-eacc3d7c2983';
+const gif = 'https://firebasestorage.googleapis.com/v0/b/crewcoin-3d719.appspot.com/o/coinIconSmall.gif?alt=media&token=4d227f37-88e7-4645-9dd1-7d806ed7307e';
 
 const transporter = nodemailer.createTransport({
   service: "Office365",
@@ -62,42 +66,13 @@ crewUserRouter.route('/reload/:_id')
 crewUserRouter.route(`/signup`)
   .options((req, res) => { res.sendStatus(200); })
   .post((req, res) => {
+    
     const mailData = {
       from: 'admin@crew-coin.com',  // sender address
       to: req.body.username,   // list of receivers
       subject: 'Welcome to Crew Coin', // Subject line
       text: `Welcome to Crew Coin, ${req.body.firstname}!`, // plain text body
-      html: 'Embedded image: <img src="cid:unique@crew-coin.com"/>',
-      html: 'Embedded image: <img src="cid:uniquegif@crew-coin.com"/>',
-      attachments: [{
-        filename: 'crewcoinlogo.png',
-        path: 'https://firebasestorage.googleapis.com/v0/b/crewcoin-3d719.appspot.com/o/crewcoinlogo.png?alt=media&token=04d9cef4-abb6-4579-a14c-eacc3d7c2983',
-        cid: 'unique@crew-coin.com' //same cid value as in the html img src
-      },
-      {
-        filename: 'coinIconSmall.gif',
-        path: 'https://firebasestorage.googleapis.com/v0/b/crewcoin-3d719.appspot.com/o/coinIconSmall.gif?alt=media&token=4d227f37-88e7-4645-9dd1-7d806ed7307e',
-        cid: 'uniquegif@crew-coin.com' //same cid value as in the html img src
-      }],
-      html: `
-      <img style="width: 50%;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 350px;" 
-      src="crewcoinlogo.png">
-</br>
-<div style="text-align: center; justify-content: space-evenly;" >
-      <img style="width: 50px; flex: 1" src="coinIconSmall.gif">
-      <h1 style="display: inline">Welcome to Crew Coin, ${req.body.firstname}!</h1>
-  </div>
-</b>
-<h2 style="text-align: center; ">Ask your manager what you can do to earn your first Crew Coin!</h2> </b> 
- </b></b></b>
-      <p style="text-align: center; "> You have successfully signed up for Crew Coin. </p> </b>
-      <p style="text-align: center;"> If you have any questions, please contact us at
-      <a href="mailto:admin@crew-coin.com"> admin@crew-coin.com </a>
-      `,
+      html: email.welcome(req.body.firstname, logo, gif ) // html body
     };
 
     CrewUser.register(
@@ -292,7 +267,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
       )
     }
     if (req.body.purchase) {
-      CrewUser.find({admin: true})
+      CrewUser.find({admin: true, portalId: portalId})
         .then(crewuser => {
           const adminEmail = crewuser[0].username;
           const mailDataPurchase = {
@@ -300,46 +275,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
             to: [email, adminEmail],   // list of receivers
             subject: 'New Crew Coin Purchase!', // Subject line
             text: `${user}, Your New Crew Coin Purchase!`, // plain text body
-            html: 'Embedded image: <img src="cid:unique@crew-coin.com"/>',
-            html: 'Embedded image: <img src="cid:uniquegif@crew-coin.com"/>',
-            html: 'Embedded image: <img src="cid:prize@crew-coin.com"/>',
-            attachments: [{
-              filename: 'crewcoinlogo.png',
-              path: 'https://firebasestorage.googleapis.com/v0/b/crewcoin-3d719.appspot.com/o/crewcoinlogo.png?alt=media&token=04d9cef4-abb6-4579-a14c-eacc3d7c2983',
-              cid: 'unique@crew-coin.com' //same cid value as in the html img src
-            },
-            {
-              filename: 'prize.png',
-              path: `${image}`,
-              cid: 'prize@crew-coin.com' //same cid value as in the html img src
-            }],
-            html: `
-        <img style="width: 50%;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 350px;" 
-        src="crewcoinlogo.png">
-        <h1 style="text-align: center; color="#FFD700;">New Purchase!</h1> <br>
-        <img style="width: 50%;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 350px;" 
-        src="prize.png">
-      </br>
-      <div style="text-align: center; justify-content: space-evenly;" >
-        <h1 style="display: inline">${user}, Your purchase has been confirmed!</h1><br>
-        <h2 style="display: inline"> Employee Name: ${user}</h2><br>
-        <h2 style="display: inline">Item: ${prize}</h2><br>
-        <h3 style="display: inline">Description: ${prizeDescription}</h3><br>
-        <h2 style="display: inline">Cost: for ${coin(cost)}<h2>
-      </div>
-      <hr>
-        <p style="text-align: center;"> Please allow time for processing.</p><br>
-        <p style="text-align: center;"> If you have any questions, please contact your administrator at
-        <a href="mailto:${adminEmail}"> ${adminEmail} </a> </p>
-        `,
+            html: email.purchase(user, prize, prizeDescription, cost, adminEmail, logo, gif, image),
           };
           transporter.sendMail(mailDataPurchase, function (err, info) {
             if (err)
