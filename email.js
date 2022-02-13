@@ -619,10 +619,10 @@ exports.purchase = function(user, item, description, cost, adminEmail, logo, ima
               <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;" align="left">
                 
           <div style="color: #f1f8f5; line-height: 200%; text-align: left; word-wrap: break-word;">
-            <p style="font-size: 14px; line-height: 200%;"><span style="font-size: 18px; line-height: 36px; color: #000000;">User: ${user} </span></p>
-        <p style="font-size: 14px; line-height: 200%;"><span style="font-size: 18px; line-height: 36px; color: #000000;">Item: ${item}</span></p>
-        <p style="font-size: 14px; line-height: 200%;"><span style="font-size: 18px; line-height: 36px; color: #000000;">Description: ${description}</span></p>
-        <p style="font-size: 14px; line-height: 200%;"><span style="font-size: 18px; line-height: 36px; color: #000000;">Cost: ${cost}</span></p>
+            <p style="font-size: 14px; line-height: 200%;"><span style="font-size: 18px; line-height: 36px; color: #000000;"><strong>User:</strong> ${user} </span></p>
+        <p style="font-size: 14px; line-height: 200%;"><span style="font-size: 18px; line-height: 36px; color: #000000;"><strong>Item:</strong> ${item}</span></p>
+        <p style="font-size: 14px; line-height: 200%;"><span style="font-size: 18px; line-height: 36px; color: #000000;"><strong>Description:</strong> ${description}</span></p>
+        <p style="font-size: 14px; line-height: 200%;"><span style="font-size: 18px; line-height: 36px; color: #000000;"><strong>Cost:</strong> ${cost}</span></p>
           </div>
         
               </td>
