@@ -527,7 +527,7 @@ exports.purchase = function(user, item, description, cost, adminEmail, logo, ima
           <h1 class="v-font-size" style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Montserrat',sans-serif; font-size: 33px;">
             <strong>New Purchase!</strong>
           </h1>
-          <img align="center" border="0" src=${image} alt="prize" title="prize" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 693px;" width="693" class="v-src-width v-src-max-width"/>
+          <img align="center" border="0" src=${image} alt="prize" title="prize" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 80%;max-width: 493px;" width="493" class="v-src-width v-src-max-width"/>
         
               </td>
             </tr>
