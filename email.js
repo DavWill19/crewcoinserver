@@ -540,7 +540,7 @@ exports.purchase = function(user, item, description, cost, adminEmail, logo, ima
               <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 60px 18px;font-family:'Montserrat',sans-serif;" align="left">
                 
           <div style="color: #444444; line-height: 170%; text-align: center; word-wrap: break-word;">
-            <p style="font-size: 14px; line-height: 170%;"><span style="font-size: 20px; line-height: 34px;">Thank you for your purchase, ${user}, please allow time for processing. </span></p>
+            <p style="font-size: 14px; line-height: 170%;"><span style="font-size: 20px; line-height: 34px;">${user},Thank you for your purchase! Please allow time for processing. </span></p>
           </div>
         
               </td>
