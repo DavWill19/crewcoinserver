@@ -526,14 +526,12 @@ exports.purchase = function(user, item, description, cost, adminEmail, logo, ima
                 
           <h1 class="v-font-size" style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Montserrat',sans-serif; font-size: 33px;">
             <strong>New Purchase!</strong>
-          </h1>
-          <img align="center" border="0" src=${image} alt="prize" title="prize" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;margin: auto;width: 80%;max-width: 493px;" width="493" class="v-src-width v-src-max-width"/>
-        
+          </h1>        
               </td>
             </tr>
           </tbody>
         </table>
-        
+
         <table id="u_content_text_3" style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
           <tbody>
             <tr>
@@ -600,11 +598,14 @@ exports.purchase = function(user, item, description, cost, adminEmail, logo, ima
           
         <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
           <tbody>
+              
             <tr>
+                
               <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:0px;font-family:'Montserrat',sans-serif;" align="left">
                 
           <h1 class="v-font-size" style="margin: 0px; color: #000000; line-height: 160%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Montserrat',sans-serif; font-size: 20px;">
             <strong>Purchase Details:</strong>
+                    <img align="center" border="0" src=${image} alt="prize" title="prize" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;margin: auto;width: 80%;max-width: 493px;" width="493" class="v-src-width v-src-max-width"/>
           </h1>
         
               </td>
