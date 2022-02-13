@@ -276,7 +276,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
             to: [email1, adminEmail],   // list of receivers
             subject: 'New Crew Coin Purchase!', // Subject line
             text: `${user}, Your New Crew Coin Purchase!`, // plain text body
-            html: email.purchase(user, prize, prizeDescription, cost, adminEmail, logo, image),
+            html: email.purchase(user, prize, prizeDescription, coin(cost), adminEmail, logo, image),
           };
           transporter.sendMail(mailDataPurchase, function (err, info) {
             if (err)
