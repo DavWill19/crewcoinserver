@@ -259,7 +259,7 @@ exports.welcome = function(user, logo, gif) {
         
         
         <div class="u-row-container" style="padding: 0px;background-color: transparent">
-          <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #111114;">
+          <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: white;">
             <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
               <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #111114;"><![endif]-->
               
@@ -273,7 +273,7 @@ exports.welcome = function(user, logo, gif) {
             <tr>
               <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:5px 10px 0px;font-family:'Montserrat',sans-serif;" align="left">
                 
-          <div style="color: #ffffff; line-height: 140%; text-align: center; word-wrap: break-word;">
+          <div style="color: black; line-height: 140%; text-align: center; word-wrap: break-word;">
             <p style="font-size: 14px; line-height: 140%;"><span style="font-size: 18px; line-height: 25.2px;"><strong>Crew Coin</strong></span></p>
           </div>
         
@@ -287,8 +287,9 @@ exports.welcome = function(user, logo, gif) {
             <tr>
               <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:0px;font-family:'Montserrat',sans-serif;" align="left">
                 
-          <div style="color: #b0b1b4; line-height: 180%; text-align: center; word-wrap: break-word;">
+          <div style="color: #black; line-height: 180%; text-align: center; word-wrap: break-word;">
             <p style="font-size: 14px; line-height: 180%;">www.crew-coin.com</p>
+        <p style="font-size: 14px; line-height: 180%;">admin@crew-coin.com</p>
           </div>
         
               </td>
@@ -321,7 +322,7 @@ exports.welcome = function(user, logo, gif) {
             <tr>
               <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:0px 10px 13px;font-family:'Montserrat',sans-serif;" align="left">
                 
-          <div style="color: #b0b1b4; line-height: 180%; text-align: center; word-wrap: break-word;">
+          <div style="color: black; line-height: 180%; text-align: center; word-wrap: break-word;">
             <p style="font-size: 14px; line-height: 180%;">&copy; 2022 All Rights Reserved</p>
           </div>
         
@@ -738,7 +739,7 @@ exports.purchase = function(user, item, description, cost, adminEmail, logo, ima
         
         
         <div class="u-row-container" style="padding: 0px;background-color: transparent">
-          <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #111114;">
+          <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: white;">
             <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
               <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #111114;"><![endif]-->
               
@@ -752,7 +753,7 @@ exports.purchase = function(user, item, description, cost, adminEmail, logo, ima
             <tr>
               <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:5px 10px 0px;font-family:'Montserrat',sans-serif;" align="left">
                 
-          <div style="color: #ffffff; line-height: 140%; text-align: center; word-wrap: break-word;">
+          <div style="color: black; line-height: 140%; text-align: center; word-wrap: break-word;">
             <p style="font-size: 14px; line-height: 140%;"><span style="font-size: 18px; line-height: 25.2px;"><strong>Crew Coin</strong></span></p>
           </div>
         
@@ -766,7 +767,7 @@ exports.purchase = function(user, item, description, cost, adminEmail, logo, ima
             <tr>
               <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:0px;font-family:'Montserrat',sans-serif;" align="left">
                 
-          <div style="color: #b0b1b4; line-height: 180%; text-align: center; word-wrap: break-word;">
+          <div style="color: #black; line-height: 180%; text-align: center; word-wrap: break-word;">
             <p style="font-size: 14px; line-height: 180%;">www.crew-coin.com</p>
         <p style="font-size: 14px; line-height: 180%;">admin@crew-coin.com</p>
           </div>
@@ -801,7 +802,7 @@ exports.purchase = function(user, item, description, cost, adminEmail, logo, ima
             <tr>
               <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:0px 10px 13px;font-family:'Montserrat',sans-serif;" align="left">
                 
-          <div style="color: #b0b1b4; line-height: 180%; text-align: center; word-wrap: break-word;">
+          <div style="color: black; line-height: 180%; text-align: center; word-wrap: break-word;">
             <p style="font-size: 14px; line-height: 180%;">&copy; 2022 All Rights Reserved</p>
           </div>
         
