@@ -181,7 +181,7 @@ crewUserRouter.route('/passchange/:username')
       to: req.params.username,   // list of receivers
       subject: 'Crew Coin Password Change', // Subject line
       text: `Your password has been changed!`, // plain text body
-      html: email.password(req.params.user, logo, gif ) // html body
+      html: email.password(req.body.user, logo, gif ) // html body
     };
     CrewUser.findOne({ "username": req.params.username })
       .then(crewuser => {
