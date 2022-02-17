@@ -178,10 +178,10 @@ crewUserRouter.route('/passchange/:username')
   .put(authenticate.verifyUser, (req, res, next) => {
     const mailDataPassChange = {
       from: 'admin@crew-coin.com',  // sender address
-      to: req.username,   // list of receivers
+      to: req.params.username,   // list of receivers
       subject: 'Crew Coin Password Change', // Subject line
       text: `Your password has been changed!`, // plain text body
-      html: email.password(req.username, logo, gif ) // html body
+      html: email.password(req.params.username, logo, gif ) // html body
     };
     CrewUser.findOne({ "username": req.params.username })
       .then(crewuser => {
