@@ -7,6 +7,18 @@ const crewuserSchema = new Schema({
         type: Boolean,
         default: false
     },
+    newTransaction: {
+        type: Boolean,
+        default: false
+    },
+    newAnnouncement: {
+        type: Boolean,
+        default: false
+    },
+    newStoreItem: {
+        type: Boolean,
+        default: false
+    },
     username: {
         type: String,
         default: '',

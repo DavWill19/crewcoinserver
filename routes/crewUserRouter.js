@@ -181,34 +181,7 @@ crewUserRouter.route('/passchange/:username')
       to: req.username,   // list of receivers
       subject: 'Crew Coin Password Change', // Subject line
       text: `Your password has been changed!`, // plain text body
-      html: 'Embedded image: <img src="cid:unique@crew-coin.com"/>',
-      html: 'Embedded image: <img src="cid:uniquegif@crew-coin.com"/>',
-      attachments: [{
-        filename: 'crewcoinlogo.png',
-        path: 'https://firebasestorage.googleapis.com/v0/b/crewcoin-3d719.appspot.com/o/crewcoinlogo.png?alt=media&token=04d9cef4-abb6-4579-a14c-eacc3d7c2983',
-        cid: 'unique@crew-coin.com' //same cid value as in the html img src
-      },
-      {
-        filename: 'coinIconSmall.gif',
-        path: 'https://firebasestorage.googleapis.com/v0/b/crewcoin-3d719.appspot.com/o/coinIconSmall.gif?alt=media&token=4d227f37-88e7-4645-9dd1-7d806ed7307e',
-        cid: 'uniquegif@crew-coin.com' //same cid value as in the html img src
-      }],
-      html: `
-      <img style="width: 50%;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 350px;" 
-      src="crewcoinlogo.png">
-    </br>
-    <div style="text-align: center; justify-content: space-evenly;" >
-      <img style="width: 50px; flex: 1" src="coinIconSmall.gif">
-      <h1 style="display: inline">Your password has been changed!</h1>
-    </div>
-    </b>
-      <p style="text-align: center;"> If you have any questions, please contact us at
-      <a href="mailto:admin@crew-coin.com"> admin@crew-coin.com </a>
-      `,
+      html: email.password(req.username, logo, gif ) // html body
     };
     CrewUser.findOne({ "username": req.params.username })
       .then(crewuser => {
