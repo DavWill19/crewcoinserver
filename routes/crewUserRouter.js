@@ -260,10 +260,13 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
           })
         })
     }
+    CrewUser.findById(req.params.userId)
+    .then(crewuser => {
+      const balance = crewuser.balance;
     CrewUser.findByIdAndUpdate(req.params.userId,
       {
         $push: { history: [req.body.history] },
-        balance: req.body.balance
+        balance: balance - req.body.cost
       },
     )
       .then(crewuser => {
@@ -277,6 +280,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
       })
       .catch(err => next(err));
   })
+})
 
   .delete((req, res, next) => {
     CrewUser.findByIdAndRemove(req.params.userId)
