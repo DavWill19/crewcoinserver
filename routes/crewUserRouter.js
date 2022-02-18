@@ -261,14 +261,15 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
         })
     }
     CrewUser.findById(req.params.userId)
-    .then(crewuser => {
-      const balance = crewuser.balance;
-    CrewUser.findByIdAndUpdate(req.params.userId,
-      {
-        $push: { history: [req.body.history] },
-        balance: balance - req.body.cost
-      },
-    )
+      .then(crewuser => {
+        const balance = crewuser.balance;
+        CrewUser.findByIdAndUpdate(req.params.userId,
+          {
+            $push: { history: [req.body.history] },
+            balance: balance - req.body.cost
+          },
+        )
+      })
       .then(crewuser => {
         console.log('History entry created ', crewuser);
         res.statusCode = 200;
@@ -280,7 +281,6 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
       })
       .catch(err => next(err));
   })
-})
 
   .delete((req, res, next) => {
     CrewUser.findByIdAndRemove(req.params.userId)
@@ -323,52 +323,18 @@ crewUserRouter.route('/send/:userId')
                 balance: senderbalance
               },
             ).catch(err => next(err));
+          })
+          .then(() => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({
+              success: true,
+              status: 'Coins Sent!'
+            });
+          })
+          .catch(err => next(err));
       })
-      .then(() => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json({
-          success: true,
-          status: 'Coins Sent!'
-        });
-      })
-      .catch(err => next(err));
-    })
-      .catch (err => next(console.log(err)))
+      .catch(err => next(console.log(err)))
   });
-
-
-
-
-
-
-
-
-
-
-// CrewUser.findOneAndUpdate({ _id: req.body.userId },
-//   {
-//     $push: { history: [req.body.history2] },
-//     balance: req.body.coinincrease - Crewuser.balance
-//   },
-// ).then(() => {
-//   CrewUser.findOneAndUpdate({ _id: req.params.userId },
-//     {
-//       $push: { history: [req.body.history] },
-//       balance: req.body.balance2
-//     },
-//   )
-//       .then(() => {
-//   console.log('History entry created ');
-//   res.statusCode = 200;
-//   res.setHeader('Content-Type', 'application/json');
-//   res.json({
-//     success: true
-//   });
-// })
-// .catch(err => next(err));
-//   })
-//     .catch (err => next(console.log(err)))
-// });
 
 module.exports = crewUserRouter;
