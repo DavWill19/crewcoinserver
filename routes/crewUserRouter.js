@@ -269,17 +269,17 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
             balance: balance - req.body.cost
           },
         )
+          .then(crewuser => {
+            console.log('History entry created ', crewuser);
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({
+              crewuser,
+              success: true
+            });
+          })
+          .catch(err => next(err));
       })
-      .then(crewuser => {
-        console.log('History entry created ', crewuser);
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json({
-          crewuser,
-          success: true
-        });
-      })
-      .catch(err => next(err));
   })
 
   .delete((req, res, next) => {
