@@ -6,6 +6,7 @@ const authenticate = require('../authenticate');
 const nodemailer = require('nodemailer');
 const config = require('../config');
 const email = require('../email');
+const crewuser = require('../models/crewuser');
 
 
 function coin(cost) {
@@ -66,13 +67,13 @@ crewUserRouter.route('/reload/:_id')
 crewUserRouter.route(`/signup`)
   .options((req, res) => { res.sendStatus(200); })
   .post((req, res) => {
-    
+
     const mailData = {
       from: 'admin@crew-coin.com',  // sender address
       to: req.body.username,   // list of receivers
       subject: 'Welcome to Crew Coin', // Subject line
       text: `Welcome to Crew Coin, ${req.body.firstname}!`, // plain text body
-      html: email.welcome(req.body.firstname, logo, gif ) // html body
+      html: email.welcome(req.body.firstname, logo, gif) // html body
     };
 
     CrewUser.register(
@@ -181,7 +182,7 @@ crewUserRouter.route('/passchange/:username')
       to: req.params.username,   // list of receivers
       subject: 'Crew Coin Password Change', // Subject line
       text: `Your password has been changed!`, // plain text body
-      html: email.password(req.body.user, logo, gif ) // html body
+      html: email.password(req.body.user, logo, gif) // html body
     };
     CrewUser.findOne({ "username": req.params.username })
       .then(crewuser => {
@@ -240,7 +241,7 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
       )
     }
     if (req.body.purchase) {
-      CrewUser.find({admin: true})
+      CrewUser.find({ admin: true })
         .then(crewuser => {
           const filteredByPortalId = crewuser.filter(crewuser => crewuser.portalId === portalId);
           const adminEmail = filteredByPortalId[0].username;
@@ -258,63 +259,112 @@ crewUserRouter.route('/:userId') ////////////////////////////////////
               console.log(info);
           })
         })
-    }   
-CrewUser.findByIdAndUpdate(req.params.userId,
-  {
-    $push: { history: [req.body.history] },
-    balance: req.body.balance
-  },
-)
-  .then(crewuser => {
-    console.log('History entry created ', crewuser);
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.json({
-      crewuser,
-      success: true
-    });
+    }
+    CrewUser.findByIdAndUpdate(req.params.userId,
+      {
+        $push: { history: [req.body.history] },
+        balance: req.body.balance
+      },
+    )
+      .then(crewuser => {
+        console.log('History entry created ', crewuser);
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({
+          crewuser,
+          success: true
+        });
+      })
+      .catch(err => next(err));
   })
-  .catch(err => next(err));
-    })
-    
-  .delete ((req, res, next) => {
-  CrewUser.findByIdAndRemove(req.params.userId)
-    .then(() => {
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.json({
-        success: true,
-        status: 'User Deleted!'
-      });
-    })
-    .catch(err => next(err));
-});
+
+  .delete((req, res, next) => {
+    CrewUser.findByIdAndRemove(req.params.userId)
+      .then(() => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({
+          success: true,
+          status: 'User Deleted!'
+        });
+      })
+      .catch(err => next(err));
+  });
 
 crewUserRouter.route('/send/:userId')
   .put(authenticate.verifyUser, (req, res, next) => {
-    CrewUser.findOneAndUpdate({ _id: req.body.userId },
-      {
-        $push: { history: [req.body.history2] },
-        balance: req.body.balance
-      },
-    ).then(() => {
-      CrewUser.findOneAndUpdate({ _id: req.params.userId },
-        {
-          $push: { history: [req.body.history] },
-          balance: req.body.balance2
-        },
-      )
-        .then(() => {
-          console.log('History entry created ');
-          res.statusCode = 200;
-          res.setHeader('Content-Type', 'application/json');
-          res.json({
-            success: true
-          });
-        })
-        .catch(err => next(err));
+    CrewUser.findById(req.params.userId)
+      .then(crewuser => {
+        const username = crewuser.username;
+        const coinincrease = req.body.coinincrease;
+        const receiverbalance = crewuser.balance + coinincrease;
+        console.log(receiverbalance, 'receiver balance');
+        CrewUser.findOneAndUpdate({ _id: req.params.userId },
+          {
+            $push: { history: [req.body.history] },
+            balance: receiverbalance
+          },
+        ).catch(err => next(err));
+
+      })
+      .then(() => {
+        CrewUser.findById(req.body.userId)
+          .then(crewuser => {
+            const coindecrease = req.body.coinincrease;
+            const senderbalance = crewuser.balance - coindecrease;
+            console.log(senderbalance, 'senderbalance');
+            CrewUser.findOneAndUpdate({ _id: req.body.userId },
+              {
+                $push: { history: [req.body.history2] },
+                balance: senderbalance
+              },
+            ).catch(err => next(err));
+      })
+      .then(() => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({
+          success: true,
+          status: 'Coins Sent!'
+        });
+      })
+      .catch(err => next(err));
     })
-      .catch(err => next(console.log(err)))
+      .catch (err => next(console.log(err)))
   });
+
+
+
+
+
+
+
+
+
+
+// CrewUser.findOneAndUpdate({ _id: req.body.userId },
+//   {
+//     $push: { history: [req.body.history2] },
+//     balance: req.body.coinincrease - Crewuser.balance
+//   },
+// ).then(() => {
+//   CrewUser.findOneAndUpdate({ _id: req.params.userId },
+//     {
+//       $push: { history: [req.body.history] },
+//       balance: req.body.balance2
+//     },
+//   )
+//       .then(() => {
+//   console.log('History entry created ');
+//   res.statusCode = 200;
+//   res.setHeader('Content-Type', 'application/json');
+//   res.json({
+//     success: true
+//   });
+// })
+// .catch(err => next(err));
+//   })
+//     .catch (err => next(console.log(err)))
+// });
 
 module.exports = crewUserRouter;
