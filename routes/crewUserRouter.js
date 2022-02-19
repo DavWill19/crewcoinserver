@@ -340,4 +340,30 @@ crewUserRouter.route('/send/:userId')
       .catch(err => next(console.log(err)))
   });
 
+
+
+
+crewUserRouter.route('/alert/:userId')
+  .put(authenticate.verifyUser, (req, res, next) => {
+    CrewUser.findOneAndUpdate({ _id: req.params.userId },
+      {
+        newStoreItem: req.body.newStoreItem,
+        newAnnouncement: req.body.newAnnouncement,
+        newTransaction: req.body.newTransaction,
+      },
+    ).then(() => {
+      CrewUser.findById(req.params.userId)
+        .then(crewuser => {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json({
+            success: true,
+            crewuser,
+          });
+        })
+    })
+      .catch(err => next(console.log(err)))
+  });
+
+
 module.exports = crewUserRouter;
