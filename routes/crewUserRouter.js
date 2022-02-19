@@ -344,7 +344,7 @@ crewUserRouter.route('/send/:userId')
 
 
 crewUserRouter.route('/alert/:userId')
-  .put(authenticate.verifyUser, (req, res, next) => {
+  .put((req, res, next) => {
     CrewUser.findOneAndUpdate({ _id: req.params.userId },
       {
         newStoreItem: req.body.newStoreItem,
