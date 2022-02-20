@@ -3,6 +3,7 @@ const storeRouter = express.Router();
 const cors = require('./cors');
 const Store = require('../models/store');
 const authenticate = require('../authenticate');
+const CrewUser = require('../models/crewuser');
 
 
 
@@ -25,6 +26,10 @@ storeRouter.route('/')
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json({ store, success: true });
+      }). then(() => {
+        CrewUser.findManyAndUpdate({_id: req.body.portalId}, {
+          newStoreItem: true
+        })
       })
       .catch((err) => next(err));
   })
