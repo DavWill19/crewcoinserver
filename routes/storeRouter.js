@@ -27,7 +27,7 @@ storeRouter.route('/')
         res.setHeader('Content-Type', 'application/json');
         res.json({ store, success: true });
       }). then(() => {
-        CrewUser.findManyAndUpdate({_id: req.body.portalId}, {
+        CrewUser.updateMany({_id: req.body.portalId}, {
           newStoreItem: true
         })
       })
