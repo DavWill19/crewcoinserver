@@ -34,7 +34,7 @@ storeRouter.route('/')
             res.json({ store, success: true });
           })
     })
-          .catch((err) => next(err));
+          .catch((err) => console.log(err));
       })
         .put((req, res) => {
         res.statusCode = 403;
