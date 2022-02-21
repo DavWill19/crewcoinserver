@@ -28,6 +28,7 @@ storeRouter.route('/')
     }).then(() => {
     Store.create(req.body)
           .then((store) => {
+            
             console.log('Form entry created ', store.store);
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
