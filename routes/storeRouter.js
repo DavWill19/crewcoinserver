@@ -22,6 +22,7 @@ storeRouter.route('/')
   .post(cors.cors, (req, res, next) => {
     const portalId = req.body.portalId;
     CrewUser.updateMany({portalId: portalId}, {$set: {newStoreItem: true}})
+    .catch((err) => next(err))
     .then(() => {
       console.log('updated')
     }).then(() => {
@@ -32,7 +33,6 @@ storeRouter.route('/')
             res.setHeader('Content-Type', 'application/json');
             res.json({ store, success: true });
           })
-
     })
           .catch((err) => next(err));
       })

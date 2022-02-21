@@ -21,6 +21,7 @@ announcementsRouter.route('/')
   .post(cors.cors, (req, res, next) => {
     const portalId = req.body.portalId;
     CrewUser.updateMany({ portalId: portalId }, { $set: { newAnnouncement: true } })
+    .catch((err) => next(err))
       .then(() => {
         console.log('updated')
       }).then(() => {
@@ -31,6 +32,7 @@ announcementsRouter.route('/')
             res.setHeader('Content-Type', 'application/json');
             res.json({ announcements, success: true });
           })
+
       })
       .catch((err) => next(err));
   })
