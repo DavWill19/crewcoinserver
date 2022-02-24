@@ -7,6 +7,10 @@ const crewuserSchema = new Schema({
         type: Boolean,
         default: false
     },
+    superUser: {
+        type: Boolean,
+        default: false
+    },
     newTransaction: {
         type: Boolean,
         default: false
