@@ -343,7 +343,25 @@ crewUserRouter.route('/send/:userId')
       .catch(err => next(console.log(err)))
   });
 
-
+  crewUserRouter.route('/adminpush/:userId')
+  .put((req, res, next) => {
+    CrewUser.findOneAndUpdate({ _id: req.params.userId },
+      {
+        pushToken: req.body.pushToken
+      },
+    ).then(() => {
+      CrewUser.findById(req.params.userId)
+        .then(crewuser => {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json({
+            success: true,
+            crewuser,
+          });
+        })
+    })
+      .catch(err => next(console.log(err)))
+  });
 
 
 crewUserRouter.route('/alert/:userId')

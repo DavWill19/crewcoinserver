@@ -34,7 +34,7 @@ announcementsRouter.route('/')
           })
 
       })
-      .catch((err) => next(err));
+      .catch((err) => console.log(err));
   })
 
   .put((req, res) => {
