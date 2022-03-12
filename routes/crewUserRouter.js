@@ -175,7 +175,8 @@ crewUserRouter.route(`/login`)
         phone: req.user.phone,
         joined: req.user.createdAt,
         _id: req.user._id,
-        superUser: req.user.superUser
+        superUser: req.user.superUser,
+        pushToken: req.user.pushToken
       }
     });
   });
