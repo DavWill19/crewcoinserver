@@ -94,9 +94,6 @@ crewUserRouter.route(`/signup`)
           if (req.body.portalId) {
             crewuser.portalId = req.body.portalId;
           }
-          if (req.body.organization) {
-            crewuser.organization = req.body.organization;
-          }
           if (req.body.balance) {
             crewuser.balance = req.body.balance;
           }
