@@ -51,6 +51,10 @@ const crewuserSchema = new Schema({
         type: String,
         default: '',
     },
+    type: {
+        type: String,
+        default: '',
+    },
     pushToken: {
         type: String,
         default: '',

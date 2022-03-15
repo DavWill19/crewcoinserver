@@ -112,6 +112,9 @@ crewUserRouter.route(`/signup`)
           if (req.body.admin) {
             crewuser.admin = req.body.admin;
           }
+          if (req.body.type) {
+            crewuser.type = req.body.type;
+          }
           crewuser.save(err => {
             if (err) {
               res.statusCode = 500;
