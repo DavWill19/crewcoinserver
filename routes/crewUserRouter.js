@@ -106,6 +106,12 @@ crewUserRouter.route(`/signup`)
           if (req.body.phone) {
             crewuser.phone = req.body.phone;
           }
+          if (req.body.organization) {
+            crewuser.phone = req.body.phone;
+          }
+          if (req.body.admin) {
+            crewuser.phone = req.body.admin;
+          }
           crewuser.save(err => {
             if (err) {
               res.statusCode = 500;
@@ -131,7 +137,7 @@ crewUserRouter.route(`/signup`)
                   phone: req.user.phone,
                   pushToken: req.user.pushToken,
                   joined: req.user.createdAt,
-                  id: req.user._id
+                  id: req.user._id,
                 }
               });
             });
