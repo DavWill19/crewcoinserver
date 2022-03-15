@@ -107,10 +107,10 @@ crewUserRouter.route(`/signup`)
             crewuser.phone = req.body.phone;
           }
           if (req.body.organization) {
-            crewuser.phone = req.body.phone;
+            crewuser.organization = req.body.phone;
           }
           if (req.body.admin) {
-            crewuser.phone = req.body.admin;
+            crewuser.admin = req.body.admin;
           }
           crewuser.save(err => {
             if (err) {
