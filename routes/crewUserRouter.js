@@ -443,7 +443,7 @@ crewUserRouter.route('/quickadd/:userId')
         const admin = !req.body.admin;
         CrewUser.findOneAndUpdate({ _id: req.params.userId },
           {
-            balance: admin,
+            admin: admin,
           },
         ).catch(err => next(err))
       }).then(() => {
