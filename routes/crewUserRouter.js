@@ -407,7 +407,7 @@ crewUserRouter.route('/alert/:userId')
   });
 
 crewUserRouter.route('/quickadd/:userId')
-  .put((req, res, next) => {
+  .put(authenticate.verifyUser, (req, res, next) => {
     CrewUser.findById(req.params.userId)
       .then(crewuser => {
         const username = crewuser.username;
