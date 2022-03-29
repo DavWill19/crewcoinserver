@@ -6,7 +6,6 @@ const authenticate = require('../authenticate');
 const nodemailer = require('nodemailer');
 const config = require('../config');
 const email = require('../email');
-const crewuser = require('../models/crewuser');
 
 
 function coin(cost) {
@@ -75,87 +74,101 @@ crewUserRouter.route(`/signup`)
       text: `Welcome to Crew Coin, ${req.body.firstname}!`, // plain text body
       html: email.welcome(req.body.firstname, logo, gif) // html body
     };
-
-    CrewUser.register(
-      new CrewUser({ username: req.body.username }),
-      req.body.password,
-      (err, crewuser) => {
-        if (err) {
-          res.statusCode = 500;
+    CrewUser.find({ portalId: req.body.portalId })
+      .then((user, crewuser) => {
+        if (user.length > 0 && req.body.admin === true) {
+          res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
-          res.json({ err: err });
+          res.json({ success: false, message: 'Portal Id is taken' });
+          return;
         } else {
-          if (req.body.firstname) {
-            crewuser.firstname = req.body.firstname;
-          }
-          if (req.body.lastname) {
-            crewuser.lastname = req.body.lastname;
-          }
-          if (req.body.portalId) {
-            crewuser.portalId = req.body.portalId;
-          }
-          if (req.body.balance) {
-            crewuser.balance = req.body.balance;
-          }
-          if (req.body.pushToken) {
-            crewuser.pushToken = req.body.pushToken;
-          }
-          if (req.body.history) {
-            crewuser.history = req.body.history;
-          }
-          if (req.body.phone) {
-            crewuser.phone = req.body.phone;
-          }
-          if (req.body.organization) {
-            crewuser.organization = req.body.organization;
-          }
-          if (req.body.admin) {
-            crewuser.admin = req.body.admin;
-          }
-          if (req.body.type) {
-            crewuser.type = req.body.type;
-          }
-          crewuser.save(err => {
-            if (err) {
-              res.statusCode = 500;
-              res.setHeader('Content-Type', 'application/json');
-              res.json({ err: err });
-              return;
-            }
-            passport.authenticate('local')(req, res, () => {
-              res.statusCode = 200;
-              res.setHeader('Content-Type', 'application/json');
-              res.json({
-                success: true,
-                status: 'Registration Successful!',
-                user: {
-                  firstname: req.user.firstname,
-                  lastname: req.user.lastname,
-                  username: req.user.username,
-                  portalId: req.user.portalId,
-                  organization: req.user.organization,
-                  admin: req.user.admin,
-                  balance: req.user.balance,
-                  history: req.user.history,
-                  phone: req.user.phone,
-                  pushToken: req.user.pushToken,
-                  joined: req.user.createdAt,
-                  id: req.user._id,
-                }
-              });
-            });
-          });
-          transporter.sendMail(mailData, function (err, info) {
-            if (err)
-              console.log(err)
-            else
-              console.log(info);
-          });
-        }
-      }
-    );
+          CrewUser.register(
+            new CrewUser({ username: req.body.username }),
+            req.body.password,
+            (err, crewuser) => {
 
+
+              if (err) {
+                res.statusCode = 500;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({ err: err });
+              } else {
+
+                if (req.body.portalId) {
+                  crewuser.portalId = req.body.portalId;
+                }
+                if (req.body.firstname) {
+                  crewuser.firstname = req.body.firstname;
+                }
+                if (req.body.lastname) {
+                  crewuser.lastname = req.body.lastname;
+                }
+                if (req.body.admin) {
+                  crewuser.admin = req.body.admin;
+                }
+                if (req.body.balance) {
+                  crewuser.balance = req.body.balance;
+                }
+                if (req.body.pushToken) {
+                  crewuser.pushToken = req.body.pushToken;
+                }
+                if (req.body.history) {
+                  crewuser.history = req.body.history;
+                }
+                if (req.body.phone) {
+                  crewuser.phone = req.body.phone;
+                }
+                if (req.body.organization) {
+                  crewuser.organization = req.body.organization;
+                }
+                if (req.body.type) {
+                  crewuser.type = req.body.type;
+                }
+                crewuser.save(err => {
+                  if (err) {
+                    res.statusCode = 500;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json({ err: err });
+                    return;
+                  }
+                  passport.authenticate('local')(req, res, () => {
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json({
+                      success: true,
+                      status: 'Registration Successful!',
+                      user: {
+                        firstname: req.user.firstname,
+                        lastname: req.user.lastname,
+                        username: req.user.username,
+                        portalId: req.user.portalId,
+                        organization: req.user.organization,
+                        admin: req.user.admin,
+                        balance: req.user.balance,
+                        history: req.user.history,
+                        phone: req.user.phone,
+                        pushToken: req.user.pushToken,
+                        joined: req.user.createdAt,
+                        id: req.user._id,
+                      }
+                    });
+                  });
+                })
+              }
+            }
+          );
+        }
+      })
+      .catch(err => next(err));
+    // transporter.sendMail(mailData, function (err, info) {
+    //   if (err)
+    //     console.log(err)
+    //   else
+    //     console.log(info);
+    // });
   });
+
+
 crewUserRouter.route(`/login`)
   .options((req, res) => { res.sendStatus(200); })
   .post(passport.authenticate('local'), (req, res) => {
@@ -350,7 +363,7 @@ crewUserRouter.route('/send/:userId')
       .catch(err => next(console.log(err)))
   });
 
-  crewUserRouter.route('/adminpush/:userId')
+crewUserRouter.route('/adminpush/:userId')
   .put((req, res, next) => {
     CrewUser.findOneAndUpdate({ _id: req.params.userId },
       {
@@ -392,6 +405,36 @@ crewUserRouter.route('/alert/:userId')
     })
       .catch(err => next(console.log(err)))
   });
+
+crewUserRouter.route('/quickadd/:userId')
+  .put((req, res, next) => {
+    CrewUser.findById(req.params.userId)
+      .then(crewuser => {
+        const username = crewuser.username;
+        const coinincrease = req.body.coinincrease;
+        const receiverbalance = crewuser.balance + coinincrease;
+        console.log(receiverbalance, 'receiver balance');
+        CrewUser.findOneAndUpdate({ _id: req.params.userId },
+          {
+            $push: { history: [req.body.history] },
+            balance: receiverbalance,
+            newTransaction: true
+          },
+        ).catch(err => next(err))
+      }).then(() => {
+        CrewUser.findById(req.params.userId)
+          .then(crewuser => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({
+              success: true,
+              crewuser,
+            });
+          })
+      })
+      .catch(err => next(console.log(err)))
+  });
+
 
 
 module.exports = crewUserRouter;
