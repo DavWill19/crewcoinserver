@@ -435,6 +435,33 @@ crewUserRouter.route('/quickadd/:userId')
       .catch(err => next(console.log(err)))
   });
 
+  crewUserRouter.route('/changeadmin/:userId')
+  .put(authenticate.verifyUser, (req, res, next) => {
+    CrewUser.findById(req.params.userId)
+      .then(crewuser => {
+        const username = crewuser.username;
+        const admin = !req.body.admin;
+        CrewUser.findOneAndUpdate({ _id: req.params.userId },
+          {
+            balance: admin,
+          },
+        ).catch(err => next(err))
+      }).then(() => {
+        CrewUser.findById(req.params.userId)
+          .then(crewuser => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({
+              success: true,
+              crewuser,
+            });
+          })
+      })
+      .catch(err => next(console.log(err)))
+  });
+
+
+
 
 
 module.exports = crewUserRouter;
