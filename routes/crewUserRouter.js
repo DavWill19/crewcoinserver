@@ -414,6 +414,13 @@ crewUserRouter.route('/quickadd/:userId')
         const coinincrease = req.body.coinincrease;
         const receiverbalance = crewuser.balance + coinincrease;
         console.log(receiverbalance, 'receiver balance');
+        if (req.body.admin) {
+          CrewUser.findOneAndUpdate({ _id: req.params.userId },
+            {
+              admin: req.body.admin,
+            },
+          ).catch(err => next(err));
+        }
         CrewUser.findOneAndUpdate({ _id: req.params.userId },
           {
             $push: { history: [req.body.history] },
