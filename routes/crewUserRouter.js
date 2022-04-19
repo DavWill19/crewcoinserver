@@ -82,7 +82,7 @@ crewUserRouter.route(`/signup`)
           res.json({ success: false, message: 'Portal Id is taken' });
           return;
         } else {
-          if (user.length > 0) {
+          if (user.length > 0 || req.body.admin === true) {
 
             CrewUser.register(
               new CrewUser({ username: req.body.username }),
