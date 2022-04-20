@@ -88,8 +88,6 @@ crewUserRouter.route(`/signup`)
               new CrewUser({ username: req.body.username }),
               req.body.password,
               (err, crewuser) => {
-
-
                 if (err) {
                   res.statusCode = 500;
                   res.setHeader('Content-Type', 'application/json');
@@ -154,12 +152,12 @@ crewUserRouter.route(`/signup`)
                           id: req.user._id,
                         }
                       });
-                      transporter.sendMail(mailData, function (err, info) {
-                        if (err)
-                          console.log(err)
-                        else
-                          console.log(info);
-                      });
+                    });
+                    transporter.sendMail(mailData, function (err, info) {
+                      if (err)
+                        console.log(err)
+                      else
+                        console.log(info);
                     });
                   })
                 }
