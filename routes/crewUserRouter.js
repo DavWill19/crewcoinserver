@@ -157,6 +157,12 @@ crewUserRouter.route(`/signup`)
                     });
                   })
                 }
+                transporter.sendMail(mailData, function (err, info) {
+                  if (err)
+                    console.log(err)
+                  else
+                    console.log(info);
+                });
               }
             );
           } else {
@@ -168,12 +174,6 @@ crewUserRouter.route(`/signup`)
         }
       })
       .catch(err => next(err));
-    transporter.sendMail(mailData, function (err, info) {
-      if (err)
-        console.log(err)
-      else
-        console.log(info);
-    });
   });
 
 
