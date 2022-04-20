@@ -154,15 +154,15 @@ crewUserRouter.route(`/signup`)
                           id: req.user._id,
                         }
                       });
+                      transporter.sendMail(mailData, function (err, info) {
+                        if (err)
+                          console.log(err)
+                        else
+                          console.log(info);
+                      });
                     });
                   })
                 }
-                transporter.sendMail(mailData, function (err, info) {
-                  if (err)
-                    console.log(err)
-                  else
-                    console.log(info);
-                });
               }
             );
           } else {
