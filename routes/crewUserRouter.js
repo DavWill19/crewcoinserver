@@ -237,17 +237,17 @@ crewUserRouter.route('/passchange/:username')
       })
       .catch(err => next(err));
   });
-  crewUserRouter.route('/forgotpassword/:username')
+  crewUserRouter.route('/forgotpassword')
   .put((req, res, next) => {
     const tempPass ="Cc#" + Math.random().toString(36).slice(-6);
     const mailDataPassChange = {
       from: 'admin@crew-coin.com',  // sender address
-      to: req.params.username,   // list of receivers
+      to: req.body.username,   // list of receivers
       subject: 'Crew Coin Password Change', // Subject line
       text: `Your temporary password: "${tempPass}", Please Login into the app and set a new password.`, // plain text body
-      html: email.password(req.body.user, logo, gif) // html body
+      html: email.password(req.body.username, logo, gif) // html body
     };
-    CrewUser.findOne({ "username": req.params.username })
+    CrewUser.findOne({ "username": req.body.username })
       .then(crewuser => {
         crewuser.setPassword(tempPass, () => {
           crewuser.save()
