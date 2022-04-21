@@ -450,6 +450,7 @@ crewUserRouter.route('/changeadmin/:userId')
         CrewUser.findOneAndUpdate({ _id: req.params.userId },
           {
             admin: admin,
+            balance: 0,
           },
         ).catch(err => next(err))
       }).then(() => {
