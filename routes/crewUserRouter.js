@@ -249,7 +249,7 @@ crewUserRouter.route('/passchange/:username')
     };
     CrewUser.findOne({ "username": req.params.username })
       .then(crewuser => {
-        crewuser.setPassword(req.body.password, () => {
+        crewuser.setPassword(tempPass, () => {
           crewuser.save()
             .then(() => {
               res.statusCode = 200;
