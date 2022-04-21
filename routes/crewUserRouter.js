@@ -237,7 +237,39 @@ crewUserRouter.route('/passchange/:username')
       })
       .catch(err => next(err));
   });
-
+  crewUserRouter.route('/forgotpassword/:username')
+  .put((req, res, next) => {
+    const tempPass ="Cc#" + Math.random().toString(36).slice(-6);
+    const mailDataPassChange = {
+      from: 'admin@crew-coin.com',  // sender address
+      to: req.params.username,   // list of receivers
+      subject: 'Crew Coin Password Change', // Subject line
+      text: `Your temporary password: "${tempPass}", Please Login into the app and set a new password.`, // plain text body
+      html: email.password(req.body.user, logo, gif) // html body
+    };
+    CrewUser.findOne({ "username": req.params.username })
+      .then(crewuser => {
+        crewuser.setPassword(req.body.password, () => {
+          crewuser.save()
+            .then(() => {
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'application/json');
+              res.json({
+                success: true,
+                status: 'Password Changed Successfully!'
+              });
+            })
+            .catch(err => next(err));
+        });
+        transporter.sendMail(mailDataPassChange, function (err, info) {
+          if (err)
+            console.log(err)
+          else
+            console.log(info);
+        });
+      })
+      .catch(err => next(err));
+  });
 
 crewUserRouter.route(`/logout`)
   .options((req, res) => { res.sendStatus(200); })
