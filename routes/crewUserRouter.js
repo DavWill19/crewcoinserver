@@ -207,7 +207,7 @@ crewUserRouter.route(`/login`)
   });
 crewUserRouter.route('/passchange/:username')
   .put(authenticate.verifyUser, (req, res, next) => {
-    const message = "Password Changed Successfully";
+    const message = "Your password has been changed!";
     const mailDataPassChange = {
       from: 'admin@crew-coin.com',  // sender address
       to: req.params.username,   // list of receivers
