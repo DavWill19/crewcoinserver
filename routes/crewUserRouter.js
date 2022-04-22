@@ -246,7 +246,7 @@ crewUserRouter.route('/passchange/:username')
       from: 'admin@crew-coin.com',  // sender address
       to: req.body.username,   // list of receivers
       subject: 'Crew Coin Password Change', // Subject line
-      text: `Your temporary password: "${tempPass}", Please Login into the app and set a new password.`, // plain text body
+      text: `<br> Temporary password: ${tempPass} <br> Please Login into the app and set a new password.`, // plain text body
       html: email.password(req.body.username, message, logo, gif) // html body
     };
     CrewUser.findOne({ "username": req.body.username })
