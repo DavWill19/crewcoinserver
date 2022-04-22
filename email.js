@@ -835,7 +835,7 @@ exports.purchase = function(user, item, description, cost, adminEmail, logo, ima
     );   
 };
 
-exports.password = function(user, logo, gif) {
+exports.password = function(user, message, logo, gif) {
     return (
         `<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
         <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -1016,7 +1016,7 @@ exports.password = function(user, logo, gif) {
               <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 55px;font-family:'Montserrat',sans-serif;" align="left">
                 
           <h1 class="v-font-size" style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-weight: normal; font-family: 'Montserrat',sans-serif; font-size: 33px;">
-            <strong>${user}, Your password has been changed!</strong>
+            <strong>${user}, ${message} </strong>
           </h1>
         
               </td>
