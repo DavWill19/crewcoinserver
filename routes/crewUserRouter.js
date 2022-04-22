@@ -241,7 +241,7 @@ crewUserRouter.route('/passchange/:username')
   crewUserRouter.route('/forgotpassword')
   .put((req, res, next) => {
     const tempPass ="Cc#" + Math.random().toString(36).slice(-6);
-    const message = `Your temporary password: "${tempPass}", Please Login into the app and set a new password.`
+    const message = `<br> Temporary password: ${tempPass} <br> Please Login into the app and set a new password.`
     const mailDataPassChange = {
       from: 'admin@crew-coin.com',  // sender address
       to: req.body.username,   // list of receivers
