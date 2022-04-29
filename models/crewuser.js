@@ -63,6 +63,14 @@ const crewuserSchema = new Schema({
         type: Number,
         default: 0
     },
+    budget: {
+        type: Boolean,
+        default: false
+    },
+    budgetAmount: {
+        type: Number,
+        default: 0
+    },
     history: {
         type: Array,
         default: []

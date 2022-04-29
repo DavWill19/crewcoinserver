@@ -150,6 +150,7 @@ crewUserRouter.route(`/signup`)
                           pushToken: req.user.pushToken,
                           joined: req.user.createdAt,
                           id: req.user._id,
+                          type: req.user.type,
                         }
                       });
                     });
@@ -201,7 +202,11 @@ crewUserRouter.route(`/login`)
         joined: req.user.createdAt,
         _id: req.user._id,
         superUser: req.user.superUser,
-        pushToken: req.user.pushToken
+        pushToken: req.user.pushToken,
+        type: req.user.type,
+        budget: req.user.budget,
+        budgetAmount: req.user.budgetAmount,
+        
       }
     });
   });
