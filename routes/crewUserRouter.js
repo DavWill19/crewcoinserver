@@ -488,6 +488,7 @@ crewUserRouter.route('/quickadd/:userId')
           {
             $push: { history: [req.body.history] },
             budgetAmount: req.body.budgetAmount,
+            budget: req.body.budget,
           },
         ).catch(err => next(err))
       }).then(() => {
