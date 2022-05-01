@@ -35,7 +35,7 @@ const transporter = nodemailer.createTransport({
 });
 
 ///allow users to schedule coin increases monthly
-cron.schedule('* * 1 * *', () => {
+cron.schedule('0 0 1 * *', () => {
   CrewUser.find({ budget: true })
     .then(users => {
       users.forEach(user => {
