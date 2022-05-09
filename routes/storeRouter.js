@@ -58,23 +58,25 @@ storeRouter.route('/')
       });
       storeRouter.route('/:prizeId')
       .put((req, res) => {
-        Store.findByIdAndUpdate(req.params.prizeId, 
-          {
-            title: req.body.title,
-            description: req.body.description,
-            cost: req.body.cost,
-          }
-        )
-          .then(prizes => {
+        Store.findById(req.params.prizeId)
+          .then(prize => {
+            if (req.body.title) prize.title = req.body.title;
+            if (req.body.description) prize.description = req.body.description;
+            if (req.body.image) prize.image = req.body.image;
+            if (req.body.cost) prize.cost = req.body.cost;
+            prize.save()
+          .then(prize => {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.json({
-              prizes,
+              prize,
               success: true
             });
           })
           .catch(err => next(err));
       });
+      })
+
     storeRouter.route('/:prizeId')
       .delete((req, res) => {
         Store.findByIdAndDelete(req.params.prizeId,
