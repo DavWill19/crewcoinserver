@@ -62,7 +62,7 @@ storeRouter.route('/')
           {
             title: req.body.title,
             description: req.body.description,
-            image: req.body.image,
+            cost: req.body.cost,
           }
         )
           .then(prizes => {
