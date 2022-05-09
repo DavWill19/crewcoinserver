@@ -6,8 +6,6 @@ const authenticate = require('../authenticate');
 const CrewUser = require('../models/crewuser');
 
 
-
-
 storeRouter.route('/')
   .options((req, res) => { res.sendStatus(200); })
   .get((req, res, next) => {
@@ -55,6 +53,25 @@ storeRouter.route('/')
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.json({ prizes, success: true });
+          })
+          .catch(err => next(err));
+      });
+      storeRouter.route('/:prizeId')
+      .put((req, res) => {
+        Store.findByIdAndUpdate(req.params.prizeId,
+          {
+            title: req.body.title,
+            description: req.body.description,
+            image: req.body.image,
+          }
+        )
+          .then(prizes => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({
+              prizes,
+              success: true
+            });
           })
           .catch(err => next(err));
       });
