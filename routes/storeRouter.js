@@ -19,101 +19,78 @@ storeRouter.route('/')
   })
   .post(cors.cors, (req, res, next) => {
     const portalId = req.body.portalId;
-    CrewUser.updateMany({ portalId: portalId }, { $set: { newStoreItem: true } })
-      .catch((err) => next(err))
-      .then(() => {
-        console.log('updated')
-      }).then(() => {
-        Store.create(req.body)
+    CrewUser.updateMany({portalId: portalId}, {$set: {newStoreItem: true}})
+    .catch((err) => next(err))
+    .then(() => {
+      console.log('updated')
+    }).then(() => {
+    Store.create(req.body)
           .then((store) => {
-
+            
             console.log('Form entry created ', store.store);
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.json({ store, success: true });
           })
+    })
+          .catch((err) => console.log(err));
       })
-      .catch((err) => console.log(err));
-  })
-  .put((req, res) => {
-    res.statusCode = 403;
-    res.end('PUT operation not supported on /borrow');
-  })
-  .delete((req, res) => {
-    res.statusCode = 403;
-    res.end('Delete operation not supported on /borrow');
-  });
-
-storeRouter.route('/:portalId')
-  .options((req, res) => { res.sendStatus(200); })
-  .get((req, res, next) => {
-    Store.find({ "portalId": req.params.portalId })
-      .then(prizes => {
-        console.log('Found ', prizes);
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json({ prizes, success: true });
+        .put((req, res) => {
+        res.statusCode = 403;
+        res.end('PUT operation not supported on /borrow');
       })
-      .catch(err => next(err));
-  });
-storeRouter.route('/:prizeId')
-  .put((req, res) => {
-    const title = req.body.title;
-    const description = req.body.description;
-    const image = req.body.image;
-    const cost = req.body.cost;
-    Store.findById(req.params.prizeId,
-      (err, store) => {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        if (title) {
-          store.title = title;
-        }
-        if (description) {
-          store.description = description;
-        }
-        if (image) {
-          store.image = image;
-        }
-        if (cost) {
-          store.cost = cost;
-        }
-        store.save((err, store) => {
-          if (err) {
-            console.log(err);
+      .delete((req, res) => {
+        res.statusCode = 403;
+        res.end('Delete operation not supported on /borrow');
+      });
 
-            return;
+    storeRouter.route('/:portalId')
+      .options((req, res) => { res.sendStatus(200); })
+      .get((req, res, next) => {
+        Store.find({ "portalId": req.params.portalId })
+          .then(prizes => {
+            console.log('Found ', prizes);
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({ prizes, success: true });
+          })
+          .catch(err => next(err));
+      });
+      storeRouter.route('/:prizeId')
+      .put((req, res) => {
+        Store.findByIdAndUpdate(req.params.prizeId, 
+          {
+            title: req.body.title,
+            description: req.body.description,
+            cost: req.body.cost,
           }
-          res.statusCode = 200;
-          res.setHeader('Content-Type', 'application/json');
-          res.json({
-            prizes,
-            success: true
-          });
-        }
-        );
-      }
-    )
-      .catch(err => next(err));
-  });
-storeRouter.route('/:prizeId')
-  .delete((req, res) => {
-    Store.findByIdAndDelete(req.params.prizeId,
-      {
-        prizeId: req.body._id
-      }
-    )
-      .then(prizes => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json({
-          prizes,
-          success: true
-        });
-      })
-      .catch(err => next(err));
-  });
+        )
+          .then(prizes => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({
+              prizes,
+              success: true
+            });
+          })
+          .catch(err => next(err));
+      });
+    storeRouter.route('/:prizeId')
+      .delete((req, res) => {
+        Store.findByIdAndDelete(req.params.prizeId,
+          {
+            prizeId: req.body._id
+          }
+        )
+          .then(prizes => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({
+              prizes,
+              success: true
+            });
+          })
+          .catch(err => next(err));
+      });
 
-module.exports = storeRouter;
+    module.exports = storeRouter;
