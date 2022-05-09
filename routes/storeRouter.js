@@ -57,7 +57,7 @@ storeRouter.route('/')
           .catch(err => next(err));
       });
       storeRouter.route('/:prizeId')
-      .put((req, res) => {
+      .put(authenticate.verifyUser, (req, res, next) => {
         Store.findByIdAndUpdate(req.params.prizeId,
           {
             title: req.body.title,
