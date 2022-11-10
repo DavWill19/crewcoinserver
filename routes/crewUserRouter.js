@@ -175,6 +175,44 @@ crewUserRouter.route(`/signup`)
       .catch(err => next(err));
   });
 
+crewUserRouter.route('/crewcoin/:budget')
+  .post((req, res, next) => {
+    CrewUser.find({ budget: true })
+      .then(users => {
+        if (users.length > 0) {
+          users.forEach(user => {
+            user.balance += user.budgetAmount;
+            user.save();
+            const message = "Cha Ching! <br> Your monthly balance has been increased by " + user.budgetAmount + " Crew Coins! <br> Spend them wisely!";
+            const mailDataPassChange = {
+              from: 'admin@crew-coin.com',  // sender address
+              to: user.username,   // list of receivers
+              subject: 'Cha Ching! New Balance!', // Subject line
+              text: `New Balance!`, // plain text body
+              html: email.password(user.firstname, message, logo, gif) // html body
+            };
+            transporter.sendMail(mailDataPassChange, function (err, info) {
+              if (err) {
+                console.log(err);
+                res.status = 200;
+              }
+              else {
+                console.log(info);
+                res.status = 200;
+              }
+            });
+            console.log(users);
+          });
+          res.json({ success: true, message: 'Budgets have been added to all users' });
+          return;
+        } else {
+          res.json({ success: false, message: 'No users have budgets' });
+          return;
+        }
+      })
+      .catch(err => next(err));
+  });
+
 
 crewUserRouter.route(`/login`)
   .options((req, res) => { res.sendStatus(200); })
@@ -206,7 +244,7 @@ crewUserRouter.route(`/login`)
         type: req.user.type,
         budget: req.user.budget,
         budgetAmount: req.user.budgetAmount,
-        
+
       }
     });
   });
@@ -243,9 +281,9 @@ crewUserRouter.route('/passchange/:username')
       })
       .catch(err => next(err));
   });
-  crewUserRouter.route('/forgotpassword')
+crewUserRouter.route('/forgotpassword')
   .put((req, res, next) => {
-    const tempPass ="Cc#" + Math.random().toString(36).slice(-6);
+    const tempPass = "Cc#" + Math.random().toString(36).slice(-6);
     const message = `<br> Temporary password: ${tempPass} <br> Please Login into the app and set a new password.`
     const mailDataPassChange = {
       from: 'admin@crew-coin.com',  // sender address
@@ -480,7 +518,7 @@ crewUserRouter.route('/quickadd/:userId')
       .catch(err => next(console.log(err)))
   });
 
-  crewUserRouter.route('/addbudget/:userId')
+crewUserRouter.route('/addbudget/:userId')
   .put(authenticate.verifyUser, (req, res, next) => {
     CrewUser.findById(req.params.userId)
       .then(crewuser => {

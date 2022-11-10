@@ -35,30 +35,30 @@ const transporter = nodemailer.createTransport({
 });
 
 ///allow users to schedule coin increases monthly
-cron.schedule('0 0 1 * *', () => {
-  CrewUser.find({ budget: true })
-    .then(users => {
-      users.forEach(user => {
-        user.balance += user.budgetAmount;
-        user.save();
-        const message = "Cha Ching! <br> Your monthly balance has been increased by " + user.budgetAmount + " Crew Coins! <br> Spend them wisely!";
-        const mailDataPassChange = {
-          from: 'admin@crew-coin.com',  // sender address
-          to: user.username,   // list of receivers
-          subject: 'Cha Ching! New Balance!', // Subject line
-          text: `New Balance!`, // plain text body
-          html: email.password(user.firstname, message, logo, gif) // html body
-        };
-        transporter.sendMail(mailDataPassChange, function (err, info) {
-          if (err)
-            console.log(err)
-          else
-            console.log(info);
-        });
-      })
-    })
-    .catch(err => console.log(err));
-});
+// cron.schedule('0 0 1 * *', () => {
+//   CrewUser.find({ budget: true })
+//     .then(users => {
+//       users.forEach(user => {
+//         user.balance += user.budgetAmount;
+//         user.save();
+//         const message = "Cha Ching! <br> Your monthly balance has been increased by " + user.budgetAmount + " Crew Coins! <br> Spend them wisely!";
+//         const mailDataPassChange = {
+//           from: 'admin@crew-coin.com',  // sender address
+//           to: user.username,   // list of receivers
+//           subject: 'Cha Ching! New Balance!', // Subject line
+//           text: `New Balance!`, // plain text body
+//           html: email.password(user.firstname, message, logo, gif) // html body
+//         };
+//         transporter.sendMail(mailDataPassChange, function (err, info) {
+//           if (err)
+//             console.log(err)
+//           else
+//             console.log(info);
+//         });
+//       })
+//     })
+//     .catch(err => console.log(err));
+// });
 
 
 const connect = mongoose.connect(url, {
