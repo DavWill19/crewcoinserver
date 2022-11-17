@@ -124,6 +124,12 @@ crewUserRouter.route(`/signup`)
                   if (req.body.type) {
                     crewuser.type = req.body.type;
                   }
+                  transporter.sendMail(mailData, function (err, info) {
+                    if (err)
+                      console.log(err)
+                    else
+                      console.log(info);
+                  });
                   crewuser.save(err => {
                     if (err) {
                       res.statusCode = 500;
@@ -153,12 +159,6 @@ crewUserRouter.route(`/signup`)
                           type: req.user.type,
                         }
                       });
-                    });
-                    transporter.sendMail(mailData, function (err, info) {
-                      if (err)
-                        console.log(err)
-                      else
-                        console.log(info);
                     });
                   })
                 }
