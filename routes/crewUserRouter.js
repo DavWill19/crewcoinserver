@@ -37,6 +37,63 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// 
+// export default async (req, res) => {
+
+//   const { firstname, username } = JSON.parse(req.body);
+
+//   const transporter = nodemailer.createTransport({
+//     service: "Office365",
+//     host: "smtp.office365.com",
+//     secureConnection: false,
+//     port: 25,
+//     auth: {
+//       user: config.auth.user,
+//       pass: config.auth.pass
+//     },
+//     tls: {
+//       rejectUnauthorized: false
+//     }
+//   });
+
+//   await new Promise((resolve, reject) => {
+//     // verify connection configuration
+//     transporter.verify(function (error, success) {
+//       if (error) {
+//         console.log(error);
+//         reject(error);
+//       } else {
+//         console.log("Server is ready to take our messages");
+//         resolve(success);
+//       }
+//     });
+//   });
+
+//   const mailData = {
+//     from: 'admin@crew-coin.com',  // sender address
+//     to: username,   // list of receivers
+//     subject: 'Welcome to Crew Coin', // Subject line
+//     text: `Welcome to Crew Coin, ${firstname}!`, // plain text body
+//     html: email.welcome(firstname, logo, gif) // html body
+//   };
+
+//   await new Promise((resolve, reject) => {
+//     // send mail
+//     transporter.sendMail(mailData, (err, info) => {
+//       if (err) {
+//         console.error(err);
+//         reject(err);
+//       } else {
+//         console.log(info);
+//         resolve(info);
+//       }
+//     });
+//   });
+
+//   res.status(200).json({ status: "OK" });
+// };
+// 
+
 /* GET users listing. */
 
 crewUserRouter.route('/:portalId')
@@ -66,14 +123,6 @@ crewUserRouter.route('/reload/:_id')
 crewUserRouter.route(`/signup`)
   .options((req, res) => { res.sendStatus(200); })
   .post((req, res) => {
-
-    const mailData = {
-      from: 'admin@crew-coin.com',  // sender address
-      to: req.body.username,   // list of receivers
-      subject: 'Welcome to Crew Coin', // Subject line
-      text: `Welcome to Crew Coin, ${req.body.firstname}!`, // plain text body
-      html: email.welcome(req.body.firstname, logo, gif) // html body
-    };
     CrewUser.find({ portalId: req.body.portalId })
       .then((user, crewuser) => {
         if (user.length > 0 && req.body.admin === true) {
@@ -124,12 +173,6 @@ crewUserRouter.route(`/signup`)
                   if (req.body.type) {
                     crewuser.type = req.body.type;
                   }
-                  transporter.sendMail(mailData, function (err, info) {
-                    if (err)
-                      console.log(err)
-                    else
-                      console.log(info);
-                  });
                   crewuser.save(err => {
                     if (err) {
                       res.statusCode = 500;
@@ -138,6 +181,19 @@ crewUserRouter.route(`/signup`)
                       return;
                     }
                     passport.authenticate('local')(req, res, () => {
+                      const mailData = {
+                        from: 'admin@crew-coin.com',  // sender address
+                        to: req.body.username,   // list of receivers
+                        subject: 'Welcome to Crew Coin', // Subject line
+                        text: `Welcome to Crew Coin, ${req.body.firstname}!`, // plain text body
+                        html: email.welcome(req.body.firstname, logo, gif) // html body
+                      };
+                      transporter.sendMail(mailData, function (err, info) {
+                        if (err)
+                          console.log(err)
+                        else
+                          console.log(info);
+                      });
                       res.statusCode = 200;
                       res.setHeader('Content-Type', 'application/json');
                       res.json({
