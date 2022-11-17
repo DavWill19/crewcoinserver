@@ -162,7 +162,6 @@ crewUserRouter.route(`/signup`)
                       res.json({ err: err });
                       return;
                     }
-                    sendEmail(req, res);
                     passport.authenticate('local')(req, res, () => {
                       // const mailData = {
                       //   from: 'admin@crew-coin.com',  // sender address
@@ -199,6 +198,7 @@ crewUserRouter.route(`/signup`)
                         }
                       });
                     });
+                    sendEmail(req, res);
                   })
                 }
               }
